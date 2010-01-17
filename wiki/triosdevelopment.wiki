@@ -4,12 +4,12 @@ linking an embedded system with a front end written in javaFx
 
 Programs involved:
 
-* embedded program using freeRTOS traget cortex STM32 written C
-* USB2serial driver written in ansi C
-* front end UI written in java/javaFx
+  * embedded program using freeRTOS traget cortex STM32 written C
+  * USB2serial driver written in ansi C
+  * front end UI written in java/javaFx
 
 = Details =
 
-* Netbeans IDE
-* XCODE IDE
-* Ride7 / Keil IDE
+  * Netbeans IDE
+  * XCODE IDE
+  * Ride7 / Keil IDE
