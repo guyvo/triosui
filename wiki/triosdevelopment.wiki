@@ -1,13 +1,15 @@
-#summary One-sentence summary of this page.
+linking an embedded system with a front end written in javaFx
 
 = Introduction =
 
-Add your content here.
+Programs involved:
 
+* embedded program using freeRTOS traget cortex STM32 written C
+* USB2serial driver written in ansi C
+* front end UI written in java/javaFx
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+* Netbeans IDE
+* XCODE IDE
+* Ride7 / Keil IDE
