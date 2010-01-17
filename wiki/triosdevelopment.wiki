@@ -16,6 +16,17 @@ Programs involved:
 
 = Scoop =
 
-{{{
 Only the front end will be covered in this project
+
+{{{
+var mainStage = Stage {
+            title: "TriosView"
+            scene: Scene {
+
+                fill: Color.BLACK
+                width: SCREENWIDTH
+                height: SCREENHEIGTH
+                content: []
+            }
+}
 }}}
