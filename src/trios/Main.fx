@@ -8,6 +8,7 @@
  *      Heigth = 800 pixels
  *      Width  = 480 pixels
  *
+ * Initial check in in google reposity
  */
 package trios;
 
