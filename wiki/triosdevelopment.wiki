@@ -13,3 +13,9 @@ Programs involved:
   * Netbeans IDE
   * XCODE IDE
   * Ride7 / Keil IDE
+
+= Scoop =
+
+{{{
+Only the front end will be covered in this project
+}}}
