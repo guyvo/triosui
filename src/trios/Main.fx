@@ -14,45 +14,41 @@ package trios;
 
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-
 import javafx.scene.Scene;
 import javafx.io.Storage;
-
 import trios.TriosController.*;
-import trios.TriosView.TileView;
+import trios.TriosView.*;
 
-
-
+// the screen boundaries
 public def SCREENWIDTH = 480;
 public def SCREENHEIGTH = 800;
 
+// used to test XML parsing
 var entry = Storage {
             source: "model"
-        }
-
-
-var mainStage = Stage {
-            title: "TriosView"
-            scene: Scene {
-
-                fill: Color.BLACK
-                width: SCREENWIDTH
-                height: SCREENHEIGTH
-                content: []
-            }
 }
 
-function run() {
-  
-  doParse(entry.resource.openInputStream());
+// theStage
+var mainStage = Stage {
+    title: "TriosView"
+    scene: Scene {
+        fill: Color.BLACK
+        width: SCREENWIDTH
+        height: SCREENHEIGTH
+        content: []
+    }
+}
 
- 
-  //writeToXmlFile();
+function run()  {
 
+    doParse(entry.resource.openInputStream());
+
+    //writeToXmlFile();
+
+    // overview of lights as first view bind with scene
     mainStage.scene.content = [
-            TriosView.TileView {}
-            ]
+        TriosView.TileView {}
+    ]
+
     //FX.exit();
-
-
 }
