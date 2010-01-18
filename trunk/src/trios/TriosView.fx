@@ -9,9 +9,6 @@ import javafx.scene.CustomNode;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.layout.Tile;
 import trios.TriosController.*;
 import trios.TriosModel.*;
 import javafx.scene.shape.Circle;
@@ -20,34 +17,66 @@ import javafx.animation.transition.RotateTransition;
 import javafx.animation.transition.ScaleTransition;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import trios.LabelButtonNode.LabelButtonInHBox;
-import trios.LevelBarNode.HorizontalBar;
 import javafx.scene.Group;
+import trios.LabelButtonNode.*;
+import trios.LevelBarNode.*;
 
 /**
  * @author guy
  */
-var dis = true;
+var disableNode = true;
+
+public function setTileNodes() : Node[]{
+
+       var nodes : Node[];
+
+       for (i in [0..3]){
+            for (j in [0..5]){
+                var h = HorizontalBar {
+                    disable: bind disableNode;
+                    def x = c[i].light[j];
+                    width: 200
+                    height: 20
+                    posx: 10
+                    posy: 10
+                    valmodel: bind x.ivalue with inverse
+                }
+
+                insert h into nodes;
+
+                var l  = LabelButtonInHBox {
+                    disable:bind disableNode
+                    actionFunction : writeToXmlFile
+                    labelText: "{c[i].light[j].id}"
+                }
+
+                insert l into nodes;
+            }
+        }
+        return nodes;
+}
 
 public class TileView extends CustomNode {
 
-    init{
+   
+    init {
+
         PlayBlock();
     }
-    
+
     var cir = Circle {
                 centerX: Main.SCREENWIDTH / 2
                 centerY: Main.SCREENHEIGTH / 2
                 radius: 100
                 fill: Color.YELLOW
-                visible: bind dis
+                visible: bind disableNode
                 onMousePressed: function (me: MouseEvent): Void {
-                    dis = false;
+                    disableNode = false;
 
                 }
             }
     var txt = Text {
-                visible: bind dis
+                visible: bind disableNode
                 x: bind (cir.centerX - 50)
                 y: bind cir.centerY
                 content: "ENABLE CONTROL"
@@ -80,36 +109,13 @@ public class TileView extends CustomNode {
                 repeatCount: RotateTransition.INDEFINITE
                 autoReverse: false
             }
-    var tile = Tile {
-                translateX: 10
-                hgap: 10
-                vgap: 1
-                columns: 2
+    var tile = TileNode {
+                cols: 2
                 rows: 24
-                tileHeight: 30
+                tileHeigth: 30
                 tileWidth: 240
-                nodeVPos: VPos.BOTTOM
-                nodeHPos: HPos.LEFT
-                content:
-                for (i in [0..3])
-                    for (j in [0..5])
-                        [
-                            HorizontalBar {
-                                disable: bind dis;
-                                def x = c[i].light[j];
-                                width: 200
-                                height: 20
-                                posx: 10
-                                posy: 10
-                                valmodel: bind x.ivalue with inverse
-                            }
-                            LabelButtonInHBox {
-                                disable:bind dis
-                                actionFunction : writeToXmlFile
-                                labelText: "{c[i].light[j].id}"
-                            }
-                        ]
-            };
+                nodes: setTileNodes()
+                }
 
     public function PlayBlock() {
         scaleTransition.play();
