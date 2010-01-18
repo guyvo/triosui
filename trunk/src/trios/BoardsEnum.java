@@ -12,5 +12,4 @@ package trios;
 public enum BoardsEnum {
     BOARD1,
     BOARD2
-
 }
