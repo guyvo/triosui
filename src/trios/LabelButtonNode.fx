@@ -31,7 +31,8 @@ public class LabelButtonInHBox extends CustomNode{
                     name: "Courier"
                     size: 10
                 }
-            }
+    }
+
     var button = Button {
                 width: 200
                 height: 20
@@ -41,11 +42,9 @@ public class LabelButtonInHBox extends CustomNode{
                     size: 10
                 }
                 action: function () {
-                    //TriosController.doHttp(buf);
                     actionFunction();
-                    //dis = true;
-                    }
-            }
+                }
+    }
 
     override protected function create(): Node {
         HBox {
