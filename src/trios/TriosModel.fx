@@ -5,42 +5,68 @@
  */
 package trios;
 
-var cortexes =
-        [CortexxEnum.CORTEX1, CortexxEnum.CORTEX2, CortexxEnum.CORTEX3, CortexxEnum.CORTEX4];
-var lights =
-        [LightEnum.LIGHT1, LightEnum.LIGHT2, LightEnum.LIGHT3, LightEnum.LIGHT4, LightEnum.LIGHT5, LightEnum.LIGHT6];
-public def c: Cortex[] =
-        for (i in cortexes)
-            Cortex {id: i};
+var cortexes = [
+    CortexxEnum.CORTEX1,
+    CortexxEnum.CORTEX2,
+    CortexxEnum.CORTEX3,
+    CortexxEnum.CORTEX4
+];
+
+var lights = [
+    LightEnum.LIGHT1,
+    LightEnum.LIGHT2,
+    LightEnum.LIGHT3,
+    LightEnum.LIGHT4,
+    LightEnum.LIGHT5,
+    LightEnum.LIGHT6
+];
+
+// model initialization
+public def c: Cortex[] = {
+    for (i in cortexes){
+        Cortex {id: i};
+    }
+}
 
 public class Light {
 
     def minRange = 0;
     def maxRange = 100;
     def maxTime = 10000.0;
-    public var id: LightEnum;
+
+
+    // as string coming from XML
     public var value: String;
     public var min: String;
     public var max: String;
     public var delta: String;
     public var pinin: String;
     public var pinout: String;
-    public var ivalue: Integer on replace {
-                if ((imin != 0) and (imax != 0)) {
-                    if (ivalue < imin) ivalue = 0;
-                    if (ivalue > imax) ivalue = 100;
-                }
 
-            };
+    // as integers with conversion
+    public var ivalue: Integer on replace {
+        if ((imin != 0) and (imax != 0)) {
+            if (ivalue < imin) ivalue = 0;
+            if (ivalue > imax) ivalue = 100;
+        }
+
+    };
+
     var imin: Integer on replace {
-                if (ivalue < imin) ivalue = 0;
-            };
+        if (ivalue < imin) ivalue = 0;
+    };
+
     var imax: Integer on replace {
-                if (ivalue > imax) ivalue = 100;
-            };
+        if (ivalue > imax) ivalue = 100;
+    };
+
     var idelta: Integer;
     var ipinin: Integer;
     var ipinout: Integer;
+
+    // some id
+    public var id: LightEnum;
+    public var name: String;
 
     function convertToRange(x: Integer): Integer {
         ((maxTime - x) / maxTime) * maxRange as Integer;
@@ -84,6 +110,7 @@ public class Light {
 
 public class General {
 
+    // as string coming from XML
     public var free1: String;
     public var watchdog: String;
     public var pvd: String;
@@ -107,7 +134,7 @@ public class General {
 }
 
 public class Cortex {
-
+    // model class
     public def light = for (i in lights) Light {id: i};
     public def general = General {};
     public var id: CortexxEnum;
