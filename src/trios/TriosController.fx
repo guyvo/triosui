@@ -25,7 +25,7 @@ var file = Storage {
 public function doHttp(method : String): Void {
 
     var getRequest: HttpRequest = HttpRequest {
-        location: "http://localhost:8080/";
+        location: "http://192.168.1.24:8080/";
         //GVO TODO
         method: method
         onStarted: function () {
