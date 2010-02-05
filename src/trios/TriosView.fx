@@ -46,10 +46,11 @@ public function setTileNodes() : Node[]{
 
                 var l  = LabelButtonInHBox {
                     disable:bind disableNode
-                    actionFunction : doHttp("GET")
+                    actionFunction:getHttpWorker("GET")
                     labelText: "{c[i].light[j].id}"
-                }
 
+                }
+                
                 insert l into nodes;
             }
         }
@@ -71,7 +72,7 @@ public class TileView extends CustomNode {
                 fill: Color.YELLOW
                 visible: bind disableNode
                 onMousePressed: function (me: MouseEvent): Void {
-                    doHttp("GET");
+                    //doHttp("GET");
                     disableNode = false;
 
                 }

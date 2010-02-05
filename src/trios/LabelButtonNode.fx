@@ -22,7 +22,7 @@ import javafx.scene.text.Font;
 public class LabelButtonInHBox extends CustomNode{
 
     public var labelText : String;
-    public var actionFunction : function(s : String):Void;
+    public var actionFunction : function():Void;
 
     var label = Label {
                 translateY: 5
@@ -42,9 +42,10 @@ public class LabelButtonInHBox extends CustomNode{
                     name: "Courier"
                     size: 10
                 }
-                action : function(){
-                        actionFunction("");
-                }
+                action :function(){
+                        actionFunction();
+                        };
+                
                 }
 
     override protected function create(): Node {
