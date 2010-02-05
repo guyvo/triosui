@@ -19,6 +19,7 @@ import javafx.io.Storage;
 import trios.TriosController.*;
 import trios.TriosView.*;
 
+
 // the screen boundaries
 public def SCREENWIDTH = 480;
 public def SCREENHEIGTH = 800;
@@ -40,7 +41,7 @@ var mainStage = Stage {
 }
 
 function run()  {
-
+   
     //doParse(entry.resource.openInputStream());
 
     //writeToXmlFile();
