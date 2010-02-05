@@ -26,11 +26,11 @@ import trios.LevelBarNode.*;
  */
 var disableNode = true;
 
-public function setTileNodes() : Node[]{
+public function setTileNodes(cortex :Integer) : Node[]{
 
        var nodes : Node[];
 
-       for (i in [0..3]){
+       for (i in [0..cortex]){
             for (j in [0..5]){
                 var h = HorizontalBar {
                     disable: bind disableNode;
@@ -113,10 +113,10 @@ public class TileView extends CustomNode {
             }
     var tile = TileNode {
                 cols: 2
-                rows: 24
+                rows: 6
                 tileHeigth: 30
                 tileWidth: 240
-                nodes: setTileNodes()
+                nodes: setTileNodes(0)
                 }
 
     public function PlayBlock() {

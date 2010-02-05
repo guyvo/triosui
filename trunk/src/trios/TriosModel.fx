@@ -7,9 +7,9 @@ package trios;
 
 var cortexes = [
     CortexxEnum.CORTEX1,
-    CortexxEnum.CORTEX2,
-    CortexxEnum.CORTEX3,
-    CortexxEnum.CORTEX4
+   // CortexxEnum.CORTEX2,
+   // CortexxEnum.CORTEX3,
+   // CortexxEnum.CORTEX4
 ];
 
 var lights = [
@@ -98,12 +98,8 @@ public class Light {
         pinin = String.valueOf(ipinin);
         pinout = String.valueOf(ipinout);
 
-        return "<VALUE>{value}</VALUE>"
-        "<MIN>{min}</MIN>"
-        "<MAX>{max}</MAX>"
-        "<STEP>{delta}</STEP>"
-        "<PININ>{pinin}</PININ>"
-        "<PINOUT>{pinout}</PINOUT>"
+        return "<Light NAME=\"{name}\" VALUE=\"{value}\" MIN=\"{min}\" "
+        "MAX=\"{max}\" DELTA=\"{delta}\" PININ=\"{pinin}\" PINOUT=\"{pinout}\" />"
         "\n";
     }
 }
@@ -138,29 +134,23 @@ public class Cortex {
     public def light = for (i in lights) Light {id: i};
     public def general = General {};
     public var id: CortexxEnum;
+    public var name;
 
     public function toXml(): String {
-        return "<OUT1>"
+        return 
+        "<Cortex CORTEX=\"{name}\" >\n"
+        "<Lights>\n"
         "{light[0].toXml()}"
-        "</OUT1\n>"
-        "<OUT2>"
         "{light[1].toXml()}"
-        "</OUT2\n>"
-        "<OUT3>"
         "{light[2].toXml()}"
-        "</OUT3\n>"
-        "<OUT4>"
         "{light[3].toXml()}"
-        "</OUT4\n>"
-        "<OUT5>"
         "{light[4].toXml()}"
-        "</OUT5\n>"
-        "<OUT6>"
         "{light[5].toXml()}"
-        "</OUT6>\n"
-        "<GENERAL>\n"
-        "{general.toXml()}"
-        "</GENERAL>\n"
+        "</Lights>\n"
+        "</Cortex>\n"
+        //"<GENERAL>\n"
+        //"{general.toXml()}"
+        //"</GENERAL>\n"
     }
 
     public function fromXml() {

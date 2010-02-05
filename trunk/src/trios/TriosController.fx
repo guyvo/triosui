@@ -85,9 +85,7 @@ public function doHttp(method : String) : Void{
             // can use input.available() to see how many bytes are available.
             try {
                 println("onInput - bytes of content available: {is.available()}");
-                //model.GetBytes(is);
-
-
+                doParse(is);
             } finally {
                 is.close();
             }
@@ -112,7 +110,7 @@ public function doHttp(method : String) : Void{
         // the output stream being closed.
         onOutput: function (os: OutputStream) {
             try {
-                //out = os;
+               writeToXmlFile(os);
             } catch (ex: IOException) {
                 ex.printStackTrace();
             } finally {
@@ -148,77 +146,77 @@ public function doParse(in : InputStream): Void{
 
         var cortexIndex;
         var lightIndex;
+        var attr;
 
         documentType: PullParser.XML;
         input: in
         onEvent: function (event: Event) {
             if (event.type == PullParser.START_ELEMENT) {
-                if ((event.qname.name.startsWith("CORTEX1")) and event.level == 1) {
-                    cortexIndex = 0;
+                if ((event.qname.name.startsWith("Cortex")) and event.level == 2) {
+                    attr = event.getAttributeValue("CORTEX");
+                    if ( attr.startsWith("Cortex1")){
+                        cortexIndex = 0;
+                    }
+                    else if ( attr.startsWith("Cortex2")){
+                        cortexIndex = 1;
+                    }
+                    else if ( attr.startsWith("Cortex3")){
+                        cortexIndex = 2;
+                    }
+                    else if ( attr.startsWith("Cortex4")){
+                        cortexIndex = 3;
+                    }
+                    c[cortexIndex].name = attr;
                 }
-                else if ((event.qname.name.startsWith("CORTEX2")) and event.level == 1) {
-                    cortexIndex = 1;
-                }
-                else if ((event.qname.name.startsWith("CORTEX3")) and event.level == 1) {
-                    cortexIndex = 2;
-                }
-                else if ((event.qname.name.startsWith("CORTEX4")) and event.level == 1) {
-                    cortexIndex = 3;
-                }
-                else if ((event.qname.name.startsWith("OUT1")) and event.level == 2) {
-                    lightIndex = 0;
-                }
-                else if ((event.qname.name.startsWith("OUT2")) and event.level == 2) {
-                    lightIndex = 1;
-                }
-                else if ((event.qname.name.startsWith("OUT3")) and event.level == 2) {
-                    lightIndex = 2;
-                }
-                else if ((event.qname.name.startsWith("OUT4")) and event.level == 2) {
-                    lightIndex = 3;
-                }
-                else if ((event.qname.name.startsWith("OUT5")) and event.level == 2) {
-                    lightIndex = 4;
-                }
-                else if ((event.qname.name.startsWith("OUT6")) and event.level == 2) {
-                    lightIndex = 5;
+                else if ((event.qname.name.startsWith("Light")) and event.level == 4) {
+                    attr = event.getAttributeValue("NAME");
+                    if ( attr.startsWith("OUT1")) {
+                        lightIndex = 0;
+                    }
+                    else if ( attr.startsWith("OUT2")) {
+                        lightIndex = 1;
+                    }
+                    else if ( attr.startsWith("OUT3")) {
+                        lightIndex = 2;
+                    }
+                    else if ( attr.startsWith("OUT4")) {
+                        lightIndex = 3;
+                    }
+                    else if ( attr.startsWith("OUT5")) {
+                        lightIndex = 4;
+                    }
+                    else if ( attr.startsWith("OUT6")) {
+                        lightIndex = 5;
+                    }
                 }
             }
             else if (event.type == PullParser.END_ELEMENT) {
-                if (event.qname.name == "VALUE" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].value = event.text
+                if (event.qname.name == "Light" and event.level == 4) {
+                    c[cortexIndex].light[lightIndex].value = event.getAttributeValue("VALUE");
+                    c[cortexIndex].light[lightIndex].min =  event.getAttributeValue("MIN");
+                    c[cortexIndex].light[lightIndex].max =  event.getAttributeValue("MAX");
+                    c[cortexIndex].light[lightIndex].delta =  event.getAttributeValue("DELTA");
+                    c[cortexIndex].light[lightIndex].pinin =  event.getAttributeValue("PININ");
+                    c[cortexIndex].light[lightIndex].pinout =  event.getAttributeValue("PINOUT");
+                    c[cortexIndex].light[lightIndex].name = event.getAttributeValue("NAME");
+                   
                 }
-                else if (event.qname.name == "MIN" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].min = event.text
-                }
-                else if (event.qname.name == "MAX" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].max = event.text
-                }
-                else if (event.qname.name == "STEP" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].delta = event.text
-                }
-                else if (event.qname.name == "PININ" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].pinin = event.text
-                }
-                else if (event.qname.name == "PINOUT" and event.level == 3) {
-                    c[cortexIndex].light[lightIndex].pinout = event.text
-                }
-                else if (event.qname.name == "GEN1" and event.level == 3) {
+                else if (event.qname.name == "GEN1" and event.level == 4) {
                     c[cortexIndex].general.free1 = event.text
                 }
-                else if (event.qname.name == "GEN2" and event.level == 3) {
+                else if (event.qname.name == "GEN2" and event.level == 4) {
                     c[cortexIndex].general.watchdog = event.text
                 }
-                else if (event.qname.name == "GEN3" and event.level == 3) {
+                else if (event.qname.name == "GEN3" and event.level == 4) {
                     c[cortexIndex].general.pvd = event.text
                 }
-                else if (event.qname.name == "GEN4" and event.level == 3) {
+                else if (event.qname.name == "GEN4" and event.level == 4) {
                     c[cortexIndex].general.free2 = event.text
                 }
-                else if (event.qname.name == "GEN5" and event.level == 3) {
+                else if (event.qname.name == "GEN5" and event.level == 4) {
                     c[cortexIndex].general.free3 = event.text
                 }
-                else if (event.qname.name == "GEN6" and event.level == 3) {
+                else if (event.qname.name == "GEN6" and event.level == 4) {
                     c[cortexIndex].general.flags = event.text
                 }
             }
@@ -227,38 +225,36 @@ public function doParse(in : InputStream): Void{
 
     parse.parse();
 
+
     // model update
     for (cortex in c){
       cortex.fromXml();
     }
+
+    doHttp("POST");
 }
 
-public function writeToXmlFile (){
+public function writeToXmlFile ( os: OutputStream){
 
-    file.resource.maxLength = 10 * 1024;
-    var os = file.resource.openOutputStream(true);
+    //file.resource.maxLength = 10 * 1024;
+    //var os = file.resource.openOutputStream(true);
 
     try{
+
+
         os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes());
         os.write("<DATA>\n".getBytes());
+        os.write("<Cortexes>\n".getBytes());
 
-        os.write("<CORTEX1>\n".getBytes());
+
         os.write(c[0].toXml().getBytes());
-        os.write("</CORTEX1>\n".getBytes());
+//        os.write(c[1].toXml().getBytes());
+//        os.write(c[2].toXml().getBytes());
+//        os.write(c[3].toXml().getBytes());
 
-        os.write("<CORTEX2>\n".getBytes());
-        os.write(c[1].toXml().getBytes());
-        os.write("</CORTEX2>\n".getBytes());
-
-        os.write("<CORTEX3>\n".getBytes());
-        os.write(c[2].toXml().getBytes());
-        os.write("</CORTEX3>\n".getBytes());
-
-        os.write("<CORTEX4>\n".getBytes());
-        os.write(c[3].toXml().getBytes());
-        os.write("</CORTEX4>\n".getBytes());
-
+        os.write("</Cortexes>\n".getBytes());
         os.write("</DATA>\n".getBytes());
+        os.flush();
 
         os.close();
     }
