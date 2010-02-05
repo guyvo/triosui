@@ -41,7 +41,7 @@ var mainStage = Stage {
 
 function run()  {
 
-    doParse(entry.resource.openInputStream());
+    //doParse(entry.resource.openInputStream());
 
     //writeToXmlFile();
 

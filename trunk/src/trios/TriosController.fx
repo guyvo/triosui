@@ -22,7 +22,7 @@ var file = Storage {
             source: "xml"
 }
 
-public function doHttp(method : String): Void {
+public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
         location: "http://192.168.1.24:8080/";
@@ -136,6 +136,10 @@ public function doHttp(method : String): Void {
     }
 
     getRequest.start();
+}
+
+public function getHttpWorker ( method : String ) : function() : Void{
+    return function (): Void { doHttp(method); }
 }
 
 public function doParse(in : InputStream): Void{
