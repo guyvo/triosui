@@ -46,7 +46,7 @@ public function setTileNodes(cortex :Integer) : Node[]{
 
                 var l  = LabelButtonInHBox {
                     disable:bind disableNode
-                    actionFunction:getHttpWorker("GET")
+                    actionFunction:getHttpWorker("POST")
                     labelText: "{c[i].light[j].id}"
 
                 }
@@ -72,7 +72,7 @@ public class TileView extends CustomNode {
                 fill: Color.YELLOW
                 visible: bind disableNode
                 onMousePressed: function (me: MouseEvent): Void {
-                    //doHttp("GET");
+                    doHttp("GET");
                     disableNode = false;
 
                 }
