@@ -18,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.io.Storage;
 import trios.TriosController.*;
 import trios.TriosView.*;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
 
 
 // the screen boundaries
@@ -39,8 +41,26 @@ var mainStage = Stage {
         content: []
     }
 }
+public class SimpleTimer {
+    public def timeline = Timeline {
+        repeatCount: Timeline.INDEFINITE
+        interpolate: false
+        keyFrames: [
+            KeyFrame {
+                time: 5s
+                action: function () : Void {
+                    doHttp("GET");
+                }
+            }
+        ]
+    }
+}
 
 function run()  {
+
+    var refresh = SimpleTimer{};
+
+    refresh.timeline.playFromStart();
    
     //doParse(entry.resource.openInputStream());
 
