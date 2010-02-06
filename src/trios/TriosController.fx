@@ -231,7 +231,7 @@ public function doParse(in : InputStream): Void{
       cortex.fromXml();
     }
 
-    doHttp("POST");
+    
 }
 
 public function writeToXmlFile ( os: OutputStream){
