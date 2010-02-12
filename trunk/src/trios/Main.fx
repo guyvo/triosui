@@ -22,54 +22,18 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 
 
-// the screen boundaries
-public def SCREENWIDTH = 480;
-public def SCREENHEIGTH = 800;
-
 // used to test XML parsing
 var entry = Storage {
             source: "model"
 }
 
-// theStage
-var mainStage = Stage {
-    title: "TriosView"
-    scene: Scene {
-        fill: Color.BLACK
-        width: SCREENWIDTH
-        height: SCREENHEIGTH
-        content: []
-    }
-}
-public class SimpleTimer {
-    public def timeline = Timeline {
-        repeatCount: Timeline.INDEFINITE
-        interpolate: false
-        keyFrames: [
-            KeyFrame {
-                time: 5s
-                action: function () : Void {
-                    doHttp("GET");
-                }
-            }
-        ]
-    }
-}
-
 function run()  {
 
-    var refresh = SimpleTimer{};
-
-    refresh.timeline.playFromStart();
-   
     //doParse(entry.resource.openInputStream());
 
     //writeToXmlFile();
 
     // overview of lights as first view bind with scene
-    mainStage.scene.content = [
-        TriosView.TileView {}
-    ]
-
+   setMainView();
     //FX.exit();
 }

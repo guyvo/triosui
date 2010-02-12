@@ -7,9 +7,9 @@ package trios;
 
 var cortexes = [
     CortexxEnum.CORTEX1,
-   // CortexxEnum.CORTEX2,
-   // CortexxEnum.CORTEX3,
-   // CortexxEnum.CORTEX4
+    CortexxEnum.CORTEX2,
+    CortexxEnum.CORTEX3,
+    CortexxEnum.CORTEX4
 ];
 
 var lights = [
@@ -49,7 +49,6 @@ public class Light {
             if (ivalue < imin) ivalue = 0;
             if (ivalue > imax) ivalue = 100;
         }
-
     };
 
     var imin: Integer on replace {
