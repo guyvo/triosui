@@ -20,65 +20,78 @@ import javafx.scene.text.Text;
 import javafx.scene.Group;
 import trios.LabelButtonNode.*;
 import trios.LevelBarNode.*;
+import trios.TimeLine.ScreenBlockTimer;
+import trios.TimeLine.RefreshTimer;
+import trios.DetailView.*;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 /**
  * @author guy
  */
-var disableNode = true;
 
-public function setTileNodes(cortex :Integer) : Node[]{
+ // the screen boundaries
+public def SCREENWIDTH = 480;
+public def SCREENHEIGTH = 800;
 
-       var nodes : Node[];
 
-       for (i in [0..cortex]){
-            for (j in [0..5]){
-                var h = HorizontalBar {
-                    disable: bind disableNode;
-                    def x = c[i].light[j];
-                    width: 200
-                    height: 20
-                    posx: 10
-                    posy: 10
-                    valmodel: bind x.ivalue with inverse
-                }
 
-                insert h into nodes;
+var saver : ScreenBlockTimer;
+var refresh : RefreshTimer;
+var overview =  TriosView.TileView {};
 
-                var l  = LabelButtonInHBox {
-                    disable:bind disableNode
-                    actionFunction:getHttpWorker("POST")
-                    labelText: "{c[i].light[j].id}"
-
-                }
-                
-                insert l into nodes;
-            }
-        }
-        return nodes;
+var mainStage = Stage {
+    title: "TriosView"
+    scene: Scene {
+        fill: Color.BLACK
+        width: SCREENWIDTH
+        height: SCREENHEIGTH
+        content: []
+    }
 }
 
-public class TileView extends CustomNode {
 
-   
-    init {
 
-        PlayBlock();
-    }
+public function setMainView(): Void {
+     mainStage.scene.content = [
+        overview
+    ]
+}
 
-    var cir = Circle {
-                centerX: Main.SCREENWIDTH / 2
-                centerY: Main.SCREENHEIGTH / 2
+public function setDetailView (cortex : Integer , light : Integer){
+    var detailview = TriosDetailView{
+        cortexIdx:cortex
+        lightIdx:light
+        actionFunction:setMainView
+    };
+
+    
+    mainStage.scene.content = [
+        detailview
+    ]
+}
+
+public function getDetailView (cortex : Integer , light : Integer) : function() : Void{
+    return function (): Void { setDetailView(cortex, light) }
+};
+
+public function screenSaver () : Void {
+
+   var cir = Circle {
+                centerX: SCREENWIDTH / 2
+                centerY: SCREENHEIGTH / 2
                 radius: 100
                 fill: Color.YELLOW
-                visible: bind disableNode
+                visible: true
                 onMousePressed: function (me: MouseEvent): Void {
-                    doHttp("GET");
-                    disableNode = false;
-
+                   setMainView();
+                   saver.timeline.play();
+                   refresh.timeline.play();
                 }
             }
+
     var txt = Text {
-                visible: bind disableNode
+                visible: true
                 x: bind (cir.centerX - 50)
                 y: bind cir.centerY
                 content: "ENABLE CONTROL"
@@ -111,29 +124,86 @@ public class TileView extends CustomNode {
                 repeatCount: RotateTransition.INDEFINITE
                 autoReverse: false
             }
-    var tile = TileNode {
-                cols: 2
-                rows: 6
-                tileHeigth: 30
-                tileWidth: 240
-                nodes: setTileNodes(0)
+
+    mainStage.scene.content = [
+        cir,txt
+    ];
+
+    scaleTransition.play();
+    fadeTransition.play();
+    rotTransition.play();
+
+    refresh.timeline.stop();
+    saver.timeline.stop();
+
+}
+
+public function setTileNodes(cortex :Integer) : Node[]{
+
+       var nodes : Node[];
+
+       for (i in [0..cortex]){
+            for (j in [0..5]){
+                var h = HorizontalBar {
+                    def temp = c[i].light[j];
+                    width: 200
+                    height: 20
+                    posx: 10
+                    posy: 10
+                    
+                    valmodel: bind temp.ivalue with inverse
                 }
 
-    public function PlayBlock() {
-        scaleTransition.play();
-        fadeTransition.play();
-        rotTransition.play();
+                insert h into nodes;
+
+                var l  = LabelButtonInHBox {
+                    actionFunction:getDetailView(i,j)
+                    labelText: "{c[i].light[j].id}"
+
+                }
+               
+                insert l into nodes;
+            }
+        }
+        return nodes;
+}
+
+public class TileView extends CustomNode {
+
+    init {
+             
+        saver = ScreenBlockTimer {
+            waitTime: 1m
+            actionFunction:screenSaver
+        }
+        
+        
+        refresh = RefreshTimer {
+            waitTime: 5s;
+            actionFunction:Resfresh
+        }
+
+        saver.timeline.play();
+        refresh.timeline.play();
+        
     }
 
-    public function PauseBlock() {
-        scaleTransition.pause();
-        fadeTransition.pause();
-        rotTransition.pause();
-    }
+    public function Resfresh(): Void{
+        //doHttp("GET");
+     }
 
+    var tile = TileNode {
+                cols: 2
+                rows: 24
+                tileHeigth: 30
+                tileWidth: 240
+                nodes: setTileNodes(3)
+                }
+
+  
     override protected function create(): Node {
         Group {
-            content: [tile, cir, txt]
+            content: [tile]
         }
     }
 }

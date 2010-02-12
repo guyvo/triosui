@@ -19,10 +19,10 @@ import javafx.scene.text.Text;
 public abstract class LevelBar extends CustomNode {
 
     def min = 0;
-    def max = 200;
-    def scale = 2;
+    public var max = 200;
+    public var scale : Integer;
     public var name: String;
-    public var height: Float;
+    public var height: Integer;
     public var posx: Float;
     public var posy: Float;
     public var width: Integer;
@@ -57,6 +57,7 @@ public abstract class LevelBar extends CustomNode {
         height: bind height
         fill: LinearGradient {
             proportional: false
+
             startX: gradStartX, startY: gradStartY, endX: gradEndX, endY: gradEndY
             stops: [
                 Stop {offset: 0.0 color: Color.GRAY},
@@ -65,19 +66,12 @@ public abstract class LevelBar extends CustomNode {
         opacity: bind opa
     }
 
-    var theValue = Text {
-        x: bind textX
-        y: bind textY
-        content: bind ((value / scale).toString())
-        font: Font {
-            name: "Arial"
-            size: 10
-        }
-        fill: Color.WHITE
-    }
+
 }
 
 public class HorizontalBar extends LevelBar {
+
+    public override var scale = 2;
 
     public override var value = bind width with inverse on replace {
         valmodel = (Integer.valueOf(value)) / scale;
@@ -93,6 +87,17 @@ public class HorizontalBar extends LevelBar {
     public override var gradStartY = bind posy;
     public override var gradEndX = bind width;
     public override var gradEndY = bind height;
+
+    var theValue = Text {
+        x: bind textX
+        y: bind textY
+        content: bind ((value / scale).toString())
+        font: Font {
+            name: "Arial"
+            size: 10
+        }
+        fill: Color.WHITE
+    }
 
     override protected function create(): Node {
 
@@ -120,14 +125,39 @@ public class HorizontalBar extends LevelBar {
 
 public class VerticalBar extends LevelBar {
 
-    public var screenHeight ;
-    public override var value = bind height as Integer;
+    public var screenHeight : Integer;
+
+    public override var scale = 6;
+    public override var max = 600;
+
+    public override var value = bind height with inverse on replace{
+        valmodel = (Integer.valueOf(value)) / scale;
+        println(" replace value {value} , {valmodel}");
+    };
+
+    public var valmodel: Integer on replace {
+        value = valmodel * scale;
+        posy = screenHeight - value;
+        println("replace valmodel {value} , {valmodel}");
+    };
+
     public override var textX = bind posx;
     public override var textY = bind posy;
     public override var gradStartX = bind posx;
     public override var gradStartY = bind (posy + height);
     public override var gradEndX = bind (posx + width);
     public override var gradEndY = bind posy;
+
+    var theValue = Text {
+        x: bind textX
+        y: bind textY
+        content: bind ((value / scale).toString())
+        font: Font {
+            name: "Arial"
+            size: 10
+        }
+        fill: Color.WHITE
+    }
 
     override protected function create(): Node {
         Group {
@@ -141,7 +171,8 @@ public class VerticalBar extends LevelBar {
             onMouseDragged: function (me: MouseEvent): Void {
 
                 posy = me.y;
-                height = (screenHeight - me.y);
+                height = (screenHeight - me.y) as Integer;
+                
                 if (height < min) {
                     height = min;
                     posy = screenHeight;
