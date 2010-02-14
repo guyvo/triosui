@@ -53,6 +53,7 @@ var mainStage = Stage {
 
 
 public function setMainView(): Void {
+     doHttp("POST");
      mainStage.scene.content = [
         overview
     ]
