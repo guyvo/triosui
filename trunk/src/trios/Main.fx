@@ -12,14 +12,8 @@
  */
 package trios;
 
-import javafx.stage.Stage;
-import javafx.scene.paint.Color;
-import javafx.scene.Scene;
 import javafx.io.Storage;
-import trios.TriosController.*;
 import trios.TriosView.*;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
 
 
 // used to test XML parsing

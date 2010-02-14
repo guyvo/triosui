@@ -10,8 +10,8 @@ package trios;
  * @author guy
  */
 public enum CortexxEnum {
-    CORTEX1,
-    CORTEX2,
-    CORTEX3,
-    CORTEX4
+    Cortex1,
+    Cortex2,
+    Cortex3,
+    Cortex4
 }

@@ -25,9 +25,10 @@ var file = Storage {
 public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
-        location: "http://192.168.1.26:8080/";
+        location: "http://192.168.1.24:8080/";
         //GVO TODO
         method: method
+
         onStarted: function () {
             println("onStarted - started performing method: {getRequest.method} on location: {getRequest.location}");
         }
@@ -237,7 +238,7 @@ public function doParse(in : InputStream): Void{
 public function writeToXmlFile ( os: OutputStream){
 
     //file.resource.maxLength = 10 * 1024;
-    //var os = file.resource.openOutputStream(true);
+    //var file = file.resource.openOutputStream(true);
 
     try{
 
@@ -248,9 +249,11 @@ public function writeToXmlFile ( os: OutputStream){
 
 
         os.write(c[0].toXml().getBytes());
-//        os.write(c[1].toXml().getBytes());
-//        os.write(c[2].toXml().getBytes());
-//        os.write(c[3].toXml().getBytes());
+        //println("{c[0].toXml()}");
+        os.write(c[1].toXml().getBytes());
+        //println("{c[1].toXml()}");
+        os.write(c[2].toXml().getBytes());
+        os.write(c[3].toXml().getBytes());
 
         os.write("</Cortexes>\n".getBytes());
         os.write("</DATA>\n".getBytes());

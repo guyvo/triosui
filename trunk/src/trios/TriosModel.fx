@@ -6,25 +6,25 @@
 package trios;
 
 var cortexes = [
-    CortexxEnum.CORTEX1,
-    CortexxEnum.CORTEX2,
-    CortexxEnum.CORTEX3,
-    CortexxEnum.CORTEX4
+    CortexxEnum.Cortex1,
+    CortexxEnum.Cortex2,
+    CortexxEnum.Cortex3,
+    CortexxEnum.Cortex4
 ];
 
 var lights = [
-    LightEnum.LIGHT1,
-    LightEnum.LIGHT2,
-    LightEnum.LIGHT3,
-    LightEnum.LIGHT4,
-    LightEnum.LIGHT5,
-    LightEnum.LIGHT6
+    LightEnum.OUT1,
+    LightEnum.OUT2,
+    LightEnum.OUT3,
+    LightEnum.OUT4,
+    LightEnum.OUT5,
+    LightEnum.OUT6
 ];
 
 // model initialization
 public def c: Cortex[] = {
     for (i in cortexes){
-        Cortex {id: i};
+        Cortex {id: i name: i.toString() };
     }
 }
 
@@ -130,7 +130,7 @@ public class General {
 
 public class Cortex {
     // model class
-    public def light = for (i in lights) Light {id: i};
+    public def light = for (i in lights) Light {id: i name: i.toString()};
     public def general = General {};
     public var id: CortexxEnum;
     public var name;
