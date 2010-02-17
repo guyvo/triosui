@@ -159,7 +159,7 @@ public function setTileNodes(cortex :Integer) : Node[]{
 
                 var l  = LabelButtonInHBox {
                     actionFunction:getDetailView(i,j)
-                    labelText: "{c[i].light[j].id}"
+                    labelText: "{c[i].light[j].name}"
 
                 }
                

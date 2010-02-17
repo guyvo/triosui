@@ -23,7 +23,7 @@ public class TileNode extends CustomNode {
     public var nodes: Node[];
     var tile = Tile {
                 translateX: 10
-                translateY: 50
+                translateY: 10
                 hgap: 10
                 vgap: 1
                 columns: bind cols
