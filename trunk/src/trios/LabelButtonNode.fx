@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javax.swing.text.Position;
+import javafx.geometry.HPos;
 
 
 /**
@@ -50,6 +52,7 @@ public class LabelButtonInHBox extends CustomNode{
 
     override protected function create(): Node {
         HBox {
+            hpos:HPos.LEFT
             spacing: 5
             content: [label, button]
         }

@@ -5,6 +5,8 @@
  */
 package trios;
 
+import trios.LightMap.CortexLightMap;
+
 var cortexes = [
     CortexxEnum.Cortex1,
     CortexxEnum.Cortex2,
@@ -64,7 +66,7 @@ public class Light {
     var ipinout: Integer;
 
     // some id
-    public var id: LightEnum;
+    public var id: String;
     public var name: String;
 
     function convertToRange(x: Integer): Integer {
@@ -130,10 +132,19 @@ public class General {
 
 public class Cortex {
     // model class
-    public def light = for (i in lights) Light {id: i name: i.toString()};
+    //public def light = for (i in lights) Light {id: i name: i.toString()};
+    public var light : Light[];
     public def general = General {};
     public var id: CortexxEnum;
     public var name;
+    var mapping: CortexLightMap;
+
+    init {
+        mapping = CortexLightMap { cortex: id }
+        for ( map in mapping.theMap ){
+            insert Light{id : map.name name:map.value} into light
+        }
+    }
 
     public function toXml(): String {
         return 
