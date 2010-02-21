@@ -16,6 +16,7 @@ import javafx.data.pull.PullParser;
 import trios.TriosModel.*;
 import javafx.io.Storage;
 import javafx.stage.Alert;
+import javafx.io.http.HttpHeader;
 
 // to test XML conversion for model
 var file = Storage {
@@ -25,9 +26,15 @@ var file = Storage {
 public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
-        location: "http://192.168.1.24:8080/";
+        location: "http://192.168.1.27:8080/";
         //GVO TODO
         method: method
+
+        headers:
+        [
+            HttpHeader{name:"cortex" value:"{sizeof cortexes}"}
+
+        ]
 
         onStarted: function () {
             println("onStarted - started performing method: {getRequest.method} on location: {getRequest.location}");
@@ -145,8 +152,7 @@ public function doParse(in : InputStream): Void{
 
     var parse = PullParser {
 
-        var cortexIndex;
-        var lightIndex;
+        var cortexName;
         var attr;
 
         documentType: PullParser.XML;
@@ -155,70 +161,34 @@ public function doParse(in : InputStream): Void{
             if (event.type == PullParser.START_ELEMENT) {
                 if ((event.qname.name.startsWith("Cortex")) and event.level == 2) {
                     attr = event.getAttributeValue("CORTEX");
-                    if ( attr.startsWith("Cortex1")){
-                        cortexIndex = 0;
-                    }
-                    else if ( attr.startsWith("Cortex2")){
-                        cortexIndex = 1;
-                    }
-                    else if ( attr.startsWith("Cortex3")){
-                        cortexIndex = 2;
-                    }
-                    else if ( attr.startsWith("Cortex4")){
-                        cortexIndex = 3;
-                    }
-                    c[cortexIndex].name = attr;
-                }
-                else if ((event.qname.name.startsWith("Light")) and event.level == 4) {
-                    attr = event.getAttributeValue("NAME");
-                    if ( attr.startsWith("OUT1")) {
-                        lightIndex = 0;
-                    }
-                    else if ( attr.startsWith("OUT2")) {
-                        lightIndex = 1;
-                    }
-                    else if ( attr.startsWith("OUT3")) {
-                        lightIndex = 2;
-                    }
-                    else if ( attr.startsWith("OUT4")) {
-                        lightIndex = 3;
-                    }
-                    else if ( attr.startsWith("OUT5")) {
-                        lightIndex = 4;
-                    }
-                    else if ( attr.startsWith("OUT6")) {
-                        lightIndex = 5;
-                    }
+                    cortexName = attr;
                 }
             }
             else if (event.type == PullParser.END_ELEMENT) {
                 if (event.qname.name == "Light" and event.level == 4) {
-                    c[cortexIndex].light[lightIndex].value = event.getAttributeValue("VALUE");
-                    c[cortexIndex].light[lightIndex].min =  event.getAttributeValue("MIN");
-                    c[cortexIndex].light[lightIndex].max =  event.getAttributeValue("MAX");
-                    c[cortexIndex].light[lightIndex].delta =  event.getAttributeValue("DELTA");
-                    c[cortexIndex].light[lightIndex].pinin =  event.getAttributeValue("PININ");
-                    c[cortexIndex].light[lightIndex].pinout =  event.getAttributeValue("PINOUT");
-                    c[cortexIndex].light[lightIndex].name = event.getAttributeValue("NAME");
-                   
+                    for (cortex in c where cortex.name == cortexName ){
+                        for ( light in cortex.light where light.id == event.getAttributeValue("NAME")  ){
+                            light.value = event.getAttributeValue("VALUE");
+                            light.min =  event.getAttributeValue("MIN");
+                            light.max =  event.getAttributeValue("MAX");
+                            light.delta =  event.getAttributeValue("DELTA");
+                            light.pinin =  event.getAttributeValue("PININ");
+                            light.pinout =  event.getAttributeValue("PINOUT");
+                        }
+
+                    }
                 }
                 else if (event.qname.name == "GEN1" and event.level == 4) {
-                    c[cortexIndex].general.free1 = event.text
                 }
                 else if (event.qname.name == "GEN2" and event.level == 4) {
-                    c[cortexIndex].general.watchdog = event.text
                 }
                 else if (event.qname.name == "GEN3" and event.level == 4) {
-                    c[cortexIndex].general.pvd = event.text
                 }
                 else if (event.qname.name == "GEN4" and event.level == 4) {
-                    c[cortexIndex].general.free2 = event.text
                 }
                 else if (event.qname.name == "GEN5" and event.level == 4) {
-                    c[cortexIndex].general.free3 = event.text
                 }
                 else if (event.qname.name == "GEN6" and event.level == 4) {
-                    c[cortexIndex].general.flags = event.text
                 }
             }
         }
@@ -249,9 +219,7 @@ public function writeToXmlFile ( os: OutputStream){
 
 
         os.write(c[0].toXml().getBytes());
-        //println("{c[0].toXml()}");
         os.write(c[1].toXml().getBytes());
-        //println("{c[1].toXml()}");
         os.write(c[2].toXml().getBytes());
         os.write(c[3].toXml().getBytes());
 

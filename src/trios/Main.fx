@@ -28,6 +28,6 @@ function run()  {
     //writeToXmlFile();
 
     // overview of lights as first view bind with scene
-   setMainView();
+   setStartView();
     //FX.exit();
 }
