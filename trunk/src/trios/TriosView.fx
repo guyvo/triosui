@@ -59,10 +59,16 @@ public function setMainView(): Void {
     ]
 }
 
-public function setDetailView (cortex : Integer , light : Integer){
+public function setStartView(): Void {
+    doHttp("GET");
+     mainStage.scene.content = [
+        overview
+    ]
+}
+
+public function setDetailView ( light : Light){
     var detailview = TriosDetailView{
-        cortexIdx:cortex
-        lightIdx:light
+        theLight:light
         actionFunction:setMainView
     };
 
@@ -72,8 +78,8 @@ public function setDetailView (cortex : Integer , light : Integer){
     ]
 }
 
-public function getDetailView (cortex : Integer , light : Integer) : function() : Void{
-    return function (): Void { setDetailView(cortex, light) }
+public function getDetailView (light : Light) : function() : Void{
+    return function (): Void { setDetailView(light) }
 };
 
 public function screenSaver () : Void {
@@ -85,7 +91,7 @@ public function screenSaver () : Void {
                 fill: Color.YELLOW
                 visible: true
                 onMousePressed: function (me: MouseEvent): Void {
-                   setMainView();
+                   setStartView();
                    saver.timeline.play();
                    refresh.timeline.play();
                 }
@@ -139,35 +145,35 @@ public function screenSaver () : Void {
 
 }
 
-public function setTileNodes(cortex :Integer) : Node[]{
+public function setTileNodes() : Node[]{
 
        var nodes : Node[];
 
-       for (i in [0..cortex]){
-            for (j in [0..5]){
+       for (cortex in c){
+         for (light in cortex.light){
                 var h = HorizontalBar {
-                    def temp = c[i].light[j];
+                    def temp = light;
                     width: 200
                     height: 20
                     posx: 10
                     posy: 10
-                    
+
                     valmodel: bind temp.ivalue with inverse
                 }
-
                 insert h into nodes;
-
                 var l  = LabelButtonInHBox {
-                    actionFunction:getDetailView(i,j)
-                    labelText: "{c[i].light[j].name}"
+                    actionFunction:getDetailView(light)
+                    labelText: "{light.name}"
 
                 }
-               
+
                 insert l into nodes;
-            }
-        }
-        return nodes;
+                }
+       }
+
+       return nodes;
 }
+
 
 public class TileView extends CustomNode {
 
@@ -195,10 +201,10 @@ public class TileView extends CustomNode {
 
     var tile = TileNode {
                 cols: 2
-                rows: 24
+                rows: (sizeof cortexes) * (sizeof lights)
                 tileHeigth: 30
                 tileWidth: 240
-                nodes: setTileNodes(3)
+                nodes: setTileNodes()
                 }
 
   

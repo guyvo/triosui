@@ -7,14 +7,14 @@ package trios;
 
 import trios.LightMap.CortexLightMap;
 
-var cortexes = [
+public-read var cortexes = [
     CortexxEnum.Cortex1,
     CortexxEnum.Cortex2,
-    CortexxEnum.Cortex3,
-    CortexxEnum.Cortex4
+//    CortexxEnum.Cortex3,
+//    CortexxEnum.Cortex4
 ];
 
-var lights = [
+public-read var lights = [
     LightEnum.OUT1,
     LightEnum.OUT2,
     LightEnum.OUT3,
@@ -39,9 +39,18 @@ public class Light {
 
     // as string coming from XML
     public var value: String;
-    public var min: String;
-    public var max: String;
-    public var delta: String;
+    public var min: String on replace{
+        if ( min != "") imin = convertToRange(Integer.parseInt(min));
+
+    };
+    public var max: String on replace{
+        if (max != "") imax = convertToRange(Integer.parseInt(max));
+    };
+    public var delta: String on replace{
+        if ( delta != "") idelta = Integer.parseInt(delta);
+
+    };
+    
     public var pinin: String;
     public var pinout: String;
 
@@ -53,17 +62,17 @@ public class Light {
         }
     };
 
-    var imin: Integer on replace {
+    public var imin: Integer on replace {
         if (ivalue < imin) ivalue = 0;
     };
 
-    var imax: Integer on replace {
+    public var imax: Integer on replace {
         if (ivalue > imax) ivalue = 100;
     };
 
-    var idelta: Integer;
-    var ipinin: Integer;
-    var ipinout: Integer;
+    public var idelta: Integer;
+    public var ipinin: Integer;
+    public var ipinout: Integer;
 
     // some id
     public var id: String;

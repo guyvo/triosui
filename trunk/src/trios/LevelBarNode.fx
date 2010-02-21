@@ -132,13 +132,11 @@ public class VerticalBar extends LevelBar {
 
     public override var value = bind height with inverse on replace{
         valmodel = (Integer.valueOf(value)) / scale;
-        println(" replace value {value} , {valmodel}");
     };
 
     public var valmodel: Integer on replace {
         value = valmodel * scale;
         posy = screenHeight - value;
-        println("replace valmodel {value} , {valmodel}");
     };
 
     public override var textX = bind posx;
