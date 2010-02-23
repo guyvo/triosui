@@ -36,32 +36,19 @@ public abstract class LevelBar extends CustomNode {
     public var gradEndY: Float;
     var theFocus: Boolean = bind focused;
 
-    var theShadowBox = Rectangle {
-        x: bind posx
-        y: bind posy
-        width: max
-        height: bind height
-        fill: Color.BLACK;
-        stroke: Color.WHITE
-        strokeWidth: 3.0
-        opacity: 0.2
-        onMousePressed: function (me: MouseEvent): Void {
-            this.width = me.x as Integer;
-        }
-    }
-
     var theBox = Rectangle {
         x: bind posx
         y: bind posy
         width: bind width
         height: bind height
         fill: LinearGradient {
-            proportional: false
+            proportional: true
 
             startX: gradStartX, startY: gradStartY, endX: gradEndX, endY: gradEndY
             stops: [
                 Stop {offset: 0.0 color: Color.GRAY},
-                Stop {offset: 0.9 color: Color.YELLOW}]
+                Stop {offset: 0.2 color: Color.LIGHTYELLOW},
+                Stop {offset: 1 color: Color.YELLOW}]
         }
         opacity: bind opa
     }
@@ -83,10 +70,24 @@ public class HorizontalBar extends LevelBar {
 
     public override var textX = bind (width + 10);
     public override var textY = bind (posy + 10);
-    public override var gradStartX = bind posx;
-    public override var gradStartY = bind posy;
-    public override var gradEndX = bind width;
-    public override var gradEndY = bind height;
+    public override var gradStartX = 0;
+    public override var gradStartY = 0.5;
+    public override var gradEndX = 1;
+    public override var gradEndY = 0.5;
+
+    var theShadowBox = Rectangle {
+        x: bind posx
+        y: bind posy
+        width: max
+        height: bind height
+        fill: Color.BLACK;
+        stroke: Color.WHITE
+        strokeWidth: 3.0
+        opacity: 0.2
+        onMousePressed: function (me: MouseEvent): Void {
+            this.width = me.x as Integer;
+        }
+    }
 
     var theValue = Text {
         x: bind textX
@@ -141,10 +142,25 @@ public class VerticalBar extends LevelBar {
 
     public override var textX = bind posx;
     public override var textY = bind posy;
-    public override var gradStartX = bind posx;
-    public override var gradStartY = bind (posy + height);
-    public override var gradEndX = bind (posx + width);
-    public override var gradEndY = bind posy;
+    public override var gradStartX =0.5;
+    public override var gradStartY = 1;
+    public override var gradEndX = 0.5;
+    public override var gradEndY = 0;
+
+    var theShadowBox = Rectangle {
+        x: bind posx
+        y: bind screenHeight - max
+        width: width
+        height: screenHeight - (screenHeight - max )
+        fill: Color.BLACK;
+        stroke: Color.WHITE
+        strokeWidth: 3.0
+        opacity: 0.2
+        onMousePressed: function (me: MouseEvent): Void {
+            this.posy = me.y;
+            this.height = (screenHeight - me.y) as Integer;;
+        }
+    }
 
     var theValue = Text {
         x: bind textX
@@ -159,9 +175,10 @@ public class VerticalBar extends LevelBar {
 
     override protected function create(): Node {
         Group {
-            content: [theBox, theValue]
+            content: [theShadowBox, theBox, theValue]
             onMousePressed: function (me: MouseEvent): Void {
                 opa = 0.5;
+               
             }
             onMouseReleased: function (me: MouseEvent): Void {
                 opa = 1;
