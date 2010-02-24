@@ -21,6 +21,7 @@ import javafx.scene.control.TextBox;
 // place your code here
 public class TriosDetailView extends CustomNode {
 
+    public-init var theCortex: CortexxEnum;
     public var theLight: Light;
     public var actionFunction: function(): Void;
 
@@ -57,14 +58,14 @@ public class TriosDetailView extends CustomNode {
                 valmodel: bind temp.ivalue with inverse
             }
     var button = Button {
-                translateY: 600
-                translateX: 100
-                width: 200
-                height: 20
+                translateY: 710
+                translateX: 50
+                width: 400
+                height: 50
                 text: "Back to overview"
                 font: Font {
                     name: "Courier"
-                    size: 10
+                    size: 30
                 }
                 action: function () {
                     actionFunction();
@@ -72,25 +73,43 @@ public class TriosDetailView extends CustomNode {
             }
     var max = TextBox {
                 translateX:200
-                translateY:50
+                translateY:100
+                height:50
+                width:50
                 text: bind maxString with inverse
-                columns: 5
+                columns: 10
                 selectOnFocus: true
+                font: Font {
+                    name: "Courier"
+                    size: 30
+                }
             }
 
    var min = TextBox {
                 translateX:200
-                translateY:70
+                translateY:200
+                height:50
+                width:50
                 text: bind minString with inverse
-                columns: 5
+                columns: 10
                 selectOnFocus: true
+                font: Font {
+                    name: "Courier"
+                    size: 30
+                }
             }
    var delta = TextBox {
                 translateX:200
-                translateY:90
+                translateY:300
+                height:50
+                width:50
                 text: bind deltaString with inverse
                 columns: 5
                 selectOnFocus: true
+                font: Font {
+                    name: "Courier"
+                    size: 30
+                }
             }            
     override protected function create(): Node {
         Group {
