@@ -40,6 +40,8 @@ var saver : ScreenBlockTimer;
 var refresh : RefreshTimer;
 var overview =  TriosView.TileView {};
 
+var detailViews : TriosDetailView[];
+
 var mainStage = Stage {
     title: "TriosView"
     scene: Scene {
@@ -66,20 +68,33 @@ public function setStartView(): Void {
     ]
 }
 
-public function setDetailView ( light : Light){
+public function setDetailView ( light : Light , cortex : CortexxEnum){
     var detailview = TriosDetailView{
+        theCortex:cortex;
         theLight:light
         actionFunction:setMainView
     };
 
+    insert detailview into detailViews;
     
-    mainStage.scene.content = [
-        detailview
-    ]
 }
 
-public function getDetailView (light : Light) : function() : Void{
-    return function (): Void { setDetailView(light) }
+public function getDetail (light : Light , cortex : CortexxEnum) : Void{
+    for ( cor in c where cor.id == cortex){
+        for ( li in cor.light where li.id == light.id){
+            for (detail in detailViews where (detail.theCortex == cor.id)
+                                        and ( detail.theLight == light)){
+                 mainStage.scene.content = [
+                    detail
+                ]
+            }
+        }
+    }
+}
+
+
+public function getDetailView (light : Light , cortex : CortexxEnum) : function() : Void{
+    return function (): Void { getDetail(light,cortex) }
 };
 
 public function screenSaver () : Void {
@@ -151,6 +166,7 @@ public function setTileNodes() : Node[]{
 
        for (cortex in c){
          for (light in cortex.light){
+                setDetailView(light, cortex.id);
                 var h = HorizontalBar {
                     def temp = light;
                     width: 200
@@ -162,7 +178,7 @@ public function setTileNodes() : Node[]{
                 }
                 insert h into nodes;
                 var l  = LabelButtonInHBox {
-                    actionFunction:getDetailView(light)
+                    actionFunction:getDetailView(light,cortex.id)
                     labelText: "{light.name}"
 
                 }
