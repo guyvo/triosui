@@ -12,22 +12,11 @@
  */
 package trios;
 
-import javafx.io.Storage;
 import trios.TriosView.*;
-
-
-// used to test XML parsing
-var entry = Storage {
-            source: "model"
-}
 
 function run()  {
 
-    //doParse(entry.resource.openInputStream());
-
-    //writeToXmlFile();
-
-    // overview of lights as first view bind with scene
+   // overview of lights as first view bind with scene
    setStartView();
-    //FX.exit();
+   //FX.exit();
 }

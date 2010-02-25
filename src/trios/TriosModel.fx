@@ -5,13 +5,13 @@
  */
 package trios;
 
-import trios.LightMap.CortexLightMap;
+import trios.LightMap.*;
 
 public-read var cortexes = [
     CortexxEnum.Cortex1,
     CortexxEnum.Cortex2,
-//    CortexxEnum.Cortex3,
-//    CortexxEnum.Cortex4
+    CortexxEnum.Cortex3,
+    CortexxEnum.Cortex4
 ];
 
 public-read var lights = [
@@ -26,7 +26,10 @@ public-read var lights = [
 // model initialization
 public def c: Cortex[] = {
     for (i in cortexes){
-        Cortex {id: i name: i.toString() };
+        Cortex {
+                id: i
+                name: i.toString()
+        };
     }
 }
 
@@ -39,13 +42,18 @@ public class Light {
 
     // as string coming from XML
     public var value: String;
+    public var id: String;
+    public var name: String;
+
     public var min: String on replace{
         if ( min != "") imin = convertToRange(Integer.parseInt(min));
 
     };
+
     public var max: String on replace{
         if (max != "") imax = convertToRange(Integer.parseInt(max));
     };
+
     public var delta: String on replace{
         if ( delta != "") idelta = Integer.parseInt(delta);
 
@@ -73,10 +81,6 @@ public class Light {
     public var idelta: Integer;
     public var ipinin: Integer;
     public var ipinout: Integer;
-
-    // some id
-    public var id: String;
-    public var name: String;
 
     function convertToRange(x: Integer): Integer {
         ((maxTime - x) / maxTime) * maxRange as Integer;
@@ -117,12 +121,12 @@ public class Light {
 public class General {
 
     // as string coming from XML
-    public var free1: String;
-    public var watchdog: String;
-    public var pvd: String;
-    public var free2: String;
-    public var free3: String;
-    public var flags: String;
+    public-init var free1: String;
+    public-init var watchdog: String;
+    public-init var pvd: String;
+    public-init var free2: String;
+    public-init var free3: String;
+    public-init var flags: String;
 
     override function toString(): String {
         return " {free1} {watchdog} {pvd} {free2} {free3} {flags } \n";
@@ -140,12 +144,13 @@ public class General {
 }
 
 public class Cortex {
-    // model class
-    //public def light = for (i in lights) Light {id: i name: i.toString()};
-    public var light : Light[];
-    public def general = General {};
-    public var id: CortexxEnum;
-    public var name;
+
+    def general = General {};
+
+    public-init var light : Light[];
+    public-init var id: CortexxEnum;
+    public-init var name;
+
     var mapping: CortexLightMap;
 
     init {

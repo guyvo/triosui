@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
+import javafx.scene.Group;
 
 
 /**
@@ -22,27 +23,29 @@ import javafx.geometry.HPos;
 
 public class LabelButtonInHBox extends CustomNode{
 
-    public var labelText : String;
-    public var actionFunction : function():Void;
+    public-init var labelText : String;
+    public-init var actionFunction : function():Void;
 
-    var label = Label {
-                translateY: 5
-                textFill: Color.WHITE
+    def label = Label {
+                translateY: 3
+                textFill: Color.CORAL
                 text: bind labelText
                 font: Font {
-                    name: "Courier"
-                    size: 10
+                    name: "Arial"
+                    size: 15
                 }
     }
 
-    var button = Button {
-                width: 200
+    def button = Button {
+                translateX:170
+                width: 40
                 height: 20
-                text: " detail "
+                text: "Detail"
                 font: Font {
-                    name: "Courier"
-                    size: 10
+                    name: "Arial"
+                    size: 9
                 }
+
                 action :function(){
                         actionFunction();
                         };
@@ -50,9 +53,7 @@ public class LabelButtonInHBox extends CustomNode{
                 }
 
     override protected function create(): Node {
-        HBox {
-            hpos:HPos.LEFT
-            spacing: 5
+        Group {
             content: [label, button]
         }
 
