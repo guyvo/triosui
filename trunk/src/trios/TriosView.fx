@@ -31,14 +31,19 @@ import javafx.scene.Scene;
 // the screen boundaries
 public def SCREENWIDTH = 480;
 public def SCREENHEIGTH = 800;
+
+var stylesheets : String = "{__DIR__}default.css";
+
 var saver: ScreenBlockTimer;
 var refresh: RefreshTimer;
 var overview = TriosView.TileView { };
 var detailViews: TriosDetailView[];
 var mainStage = Stage {
             title: "TriosView"
+
             scene: Scene {
-                fill: Color.BLACK
+                stylesheets: bind stylesheets
+                //fill: Color.BLACK
                 width: SCREENWIDTH
                 height: SCREENHEIGTH
                 content: []

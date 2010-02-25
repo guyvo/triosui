@@ -1,0 +1,23 @@
+/* 
+    Document   : default
+    Created on : Feb 25, 2010, 11:06:10 PM
+    Author     : guy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+Scene {
+    fill: #000000;
+}
+
+Text {
+    font: "Arial";
+    font-size: 50pt;
+}
+
+
