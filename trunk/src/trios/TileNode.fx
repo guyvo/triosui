@@ -16,12 +16,12 @@ import javafx.geometry.HPos;
  */
 public class TileNode extends CustomNode {
 
-    public var rows: Integer;
-    public var cols: Integer;
-    public var tileHeigth: Integer;
-    public var tileWidth: Integer;
-    public var nodes: Node[];
-    var tile = Tile {
+    public-init var rows: Integer;
+    public-init var cols: Integer;
+    public-init var tileHeigth: Integer;
+    public-init var tileWidth: Integer;
+    public-init var nodes: Node[];
+    def tile = Tile {
                 translateX: 10
                 translateY: 10
                 hgap: 10

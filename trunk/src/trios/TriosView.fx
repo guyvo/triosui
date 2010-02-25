@@ -20,8 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.Group;
 import trios.LabelButtonNode.*;
 import trios.LevelBarNode.*;
-import trios.TimeLine.ScreenBlockTimer;
-import trios.TimeLine.RefreshTimer;
+import trios.TimeLine.*;
 import trios.DetailView.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -29,62 +28,51 @@ import javafx.scene.Scene;
 /**
  * @author guy
  */
-
- // the screen boundaries
+// the screen boundaries
 public def SCREENWIDTH = 480;
 public def SCREENHEIGTH = 800;
-
-
-
-var saver : ScreenBlockTimer;
-var refresh : RefreshTimer;
-var overview =  TriosView.TileView {};
-
-var detailViews : TriosDetailView[];
-
+var saver: ScreenBlockTimer;
+var refresh: RefreshTimer;
+var overview = TriosView.TileView { };
+var detailViews: TriosDetailView[];
 var mainStage = Stage {
-    title: "TriosView"
-    scene: Scene {
-        fill: Color.BLACK
-        width: SCREENWIDTH
-        height: SCREENHEIGTH
-        content: []
-    }
-}
-
-
+            title: "TriosView"
+            scene: Scene {
+                fill: Color.BLACK
+                width: SCREENWIDTH
+                height: SCREENHEIGTH
+                content: []
+            }
+        }
 
 public function setMainView(): Void {
-     doHttp("POST");
-     mainStage.scene.content = [
+    mainStage.scene.content = [
         overview
     ]
 }
 
 public function setStartView(): Void {
     doHttp("GET");
-     mainStage.scene.content = [
+    mainStage.scene.content = [
         overview
     ]
 }
 
-public function setDetailView ( light : Light , cortex : CortexxEnum){
-    var detailview = TriosDetailView{
-        theCortex:cortex;
-        theLight:light
-        actionFunction:setMainView
-    };
-
+public function setDetailView(light: Light, cortex: CortexxEnum) {
+    def detailview = TriosDetailView {
+                theCortex: cortex;
+                theLight: light
+                actionFunction: setMainView
+            };
     insert detailview into detailViews;
-    
 }
 
-public function getDetail (light : Light , cortex : CortexxEnum) : Void{
-    for ( cor in c where cor.id == cortex){
-        for ( li in cor.light where li.id == light.id){
+public function getDetail(light: Light, cortex: CortexxEnum): Void {
+    for (cor in c where cor.id == cortex) {
+        for (li in cor.light where li.id == light.id) {
             for (detail in detailViews where (detail.theCortex == cor.id)
-                                        and ( detail.theLight == light)){
-                 mainStage.scene.content = [
+                    and (detail.theLight == light)) {
+                mainStage.scene.content = [
                     detail
                 ]
             }
@@ -92,27 +80,26 @@ public function getDetail (light : Light , cortex : CortexxEnum) : Void{
     }
 }
 
-
-public function getDetailView (light : Light , cortex : CortexxEnum) : function() : Void{
-    return function (): Void { getDetail(light,cortex) }
+public function getDetailView(light: Light, cortex: CortexxEnum): function(): Void {
+    return function (): Void {
+                getDetail(light, cortex)
+            }
 };
 
-public function screenSaver () : Void {
-
-   var cir = Circle {
+public function screenSaver(): Void {
+    def cir = Circle {
                 centerX: SCREENWIDTH / 2
                 centerY: SCREENHEIGTH / 2
                 radius: 100
                 fill: Color.YELLOW
                 visible: true
                 onMousePressed: function (me: MouseEvent): Void {
-                   setStartView();
-                   saver.timeline.play();
-                   refresh.timeline.play();
+                    setStartView();
+                    saver.timeline.play();
+                    refresh.timeline.play();
                 }
             }
-
-    var txt = Text {
+    def txt = Text {
                 visible: true
                 x: bind (cir.centerX - 50)
                 y: bind cir.centerY
@@ -123,7 +110,7 @@ public function screenSaver () : Void {
                 }
                 fill: Color.BLUE
             }
-    var scaleTransition = ScaleTransition {
+    def scaleTransition = ScaleTransition {
                 duration: 5s
                 node: cir
                 byX: 1.5
@@ -131,7 +118,7 @@ public function screenSaver () : Void {
                 repeatCount: ScaleTransition.INDEFINITE
                 autoReverse: false
             }
-    var fadeTransition = FadeTransition {
+    def fadeTransition = FadeTransition {
                 duration: 5s
                 node: cir
                 fromValue: 0.2
@@ -139,7 +126,7 @@ public function screenSaver () : Void {
                 repeatCount: FadeTransition.INDEFINITE;
                 autoReverse: false
             }
-    var rotTransition = RotateTransition {
+    def rotTransition = RotateTransition {
                 duration: 5s
                 node: txt
                 byAngle: 360
@@ -148,87 +135,77 @@ public function screenSaver () : Void {
             }
 
     mainStage.scene.content = [
-        cir,txt
+        cir, txt
     ];
 
     scaleTransition.play();
     fadeTransition.play();
     rotTransition.play();
-
     refresh.timeline.stop();
     saver.timeline.stop();
-
 }
 
-public function setTileNodes() : Node[]{
+public function setTileNodes(): Node[] {
+    var nodes: Node[];
+    for (cortex in c) {
+        for (light in cortex.light) {
+            setDetailView(light, cortex.id);
+            var h = HorizontalBar {
+                        def temp = light;
+                        width: 200
+                        height: 20
+                        posx: 10
+                        posy: 10
+                        valmodel: bind temp.ivalue with inverse
+                    }
+            insert h into nodes;
+            var l = LabelButtonInHBox {
+                        actionFunction: getDetailView(light, cortex.id)
+                        labelText: "{light.name}"
+                    }
 
-       var nodes : Node[];
-
-       for (cortex in c){
-         for (light in cortex.light){
-                setDetailView(light, cortex.id);
-                var h = HorizontalBar {
-                    def temp = light;
-                    width: 200
-                    height: 20
-                    posx: 10
-                    posy: 10
-
-                    valmodel: bind temp.ivalue with inverse
-                }
-                insert h into nodes;
-                var l  = LabelButtonInHBox {
-                    actionFunction:getDetailView(light,cortex.id)
-                    labelText: "{light.name}"
-
-                }
-
-                insert l into nodes;
-                }
-       }
-
-       return nodes;
+            insert l into nodes;
+        }
+    }
+    return nodes;
 }
-
 
 public class TileView extends CustomNode {
 
     init {
-             
+
         saver = ScreenBlockTimer {
             waitTime: 1m
-            actionFunction:screenSaver
+            actionFunction: screenSaver
         }
-        
-        
+
+
         refresh = RefreshTimer {
             waitTime: 5s;
-            actionFunction:Resfresh
+            actionFunction: Resfresh
         }
 
         saver.timeline.play();
         refresh.timeline.play();
-        
+
     }
 
-    public function Resfresh(): Void{
+    public function Resfresh(): Void {
         //doHttp("GET");
-     }
+    }
 
-    var tile = TileNode {
+    def tile = TileNode {
                 cols: 2
                 rows: (sizeof cortexes) * (sizeof lights)
                 tileHeigth: 30
                 tileWidth: 240
                 nodes: setTileNodes()
-                }
+            }
 
-  
     override protected function create(): Node {
         Group {
             content: [tile]
         }
     }
+
 }
-
-

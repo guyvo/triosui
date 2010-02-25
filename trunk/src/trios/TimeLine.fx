@@ -17,8 +17,8 @@ import javafx.animation.KeyFrame;
 // place your code here
 
 public class ScreenBlockTimer extends Timeline {
-    public var waitTime : Duration;
-    public var actionFunction : function () : Void;
+    public-init var waitTime : Duration;
+    public-init var actionFunction : function () : Void;
    
     public var timeline = Timeline {
         repeatCount: Timeline.INDEFINITE
@@ -34,8 +34,8 @@ public class ScreenBlockTimer extends Timeline {
 }
 
 public class RefreshTimer extends Timeline {
-    public var waitTime : Duration;
-    public var actionFunction : function () : Void;
+    public-init var waitTime : Duration;
+    public-init var actionFunction : function () : Void;
 
     public var timeline = Timeline {
         repeatCount: Timeline.INDEFINITE

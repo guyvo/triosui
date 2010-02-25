@@ -12,28 +12,20 @@ import java.lang.Exception;
 import java.io.IOException;
 import javafx.data.pull.Event;
 import javafx.data.pull.PullParser;
-
 import trios.TriosModel.*;
-import javafx.io.Storage;
 import javafx.stage.Alert;
 import javafx.io.http.HttpHeader;
-
-// to test XML conversion for model
-var file = Storage {
-            source: "xml"
-}
 
 public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
-        location: "http://192.168.1.27:8080/";
+        location: "http://guyvo.no-ip.biz/";
         //GVO TODO
         method: method
 
         headers:
         [
             HttpHeader{name:"cortex" value:"{sizeof cortexes}"}
-
         ]
 
         onStarted: function () {
@@ -142,6 +134,7 @@ public function doHttp(method : String) : Void{
     }
 
     getRequest.start();
+    println("done http");
 }
 
 public function getHttpWorker ( method : String ) : function() : Void{

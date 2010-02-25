@@ -6,14 +6,15 @@
 package trios;
 
 import javafx.scene.CustomNode;
-import java.lang.UnsupportedOperationException;
 import javafx.scene.Node;
-import trios.LevelBarNode.VerticalBar;
+import trios.LevelBarNode.*;
 import trios.TriosModel.*;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
 import javafx.scene.control.TextBox;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 
 /**
  * @author guy
@@ -21,99 +22,139 @@ import javafx.scene.control.TextBox;
 // place your code here
 public class TriosDetailView extends CustomNode {
 
+    def posLeft = 20;
+    def posLabelsX = 100;
+    def posLabelsY = 100;
+    def spacingLabels = 50;
+    def posEditsx = posLabelsX + 150;
+    def widthEdits = 150;
+    def heigthEdits = 35;
     public-init var theCortex: CortexxEnum;
-    public var theLight: Light;
-    public var actionFunction: function(): Void;
-
+    public-init var theLight: Light;
+    public-init var actionFunction: function(): Void;
     def temp = theLight;
-
-    var imax = bind temp.imax with inverse on replace{
-        maxString = String.valueOf(imax);
-    };
-
-    var imin = bind temp.imin with inverse on replace{
-        minString = String.valueOf(imin)
-    };
-
-    var idelta = bind temp.idelta with inverse on replace{
-        deltaString = String.valueOf(idelta);
-    };
-
-    var maxString : String on replace {
-        imax = Integer.parseInt(maxString);
-    };
-
-    var minString : String on replace {
-        imin = Integer.parseInt(minString);
-    };
-    var deltaString : String on replace {
-        idelta = Integer.parseInt(deltaString);
-    };
-
-    var levelBar = VerticalBar {
-                posx: 20
+    var imax = bind temp.imax with inverse on replace {
+                maxString = String.valueOf(imax);
+            };
+    var imin = bind temp.imin with inverse on replace {
+                minString = String.valueOf(imin)
+            };
+    var idelta = bind temp.idelta with inverse on replace {
+                deltaString = String.valueOf(idelta);
+            };
+    var maxString: String on replace {
+                imax = Integer.parseInt(maxString);
+            };
+    var minString: String on replace {
+                imin = Integer.parseInt(minString);
+            };
+    var deltaString: String on replace {
+                idelta = Integer.parseInt(deltaString);
+            };
+    def label = Label {
+                translateX: posLeft
+                translateY: 5
+                textFill: Color.AQUAMARINE
+                text: bind temp.name;
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def labelMax = Label {
+                translateX: posLabelsX
+                translateY: posLabelsY
+                textFill: Color.AQUAMARINE
+                text: "Maximum";
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def labelMin = Label {
+                translateX: posLabelsX
+                translateY: posLabelsY + spacingLabels
+                textFill: Color.AQUAMARINE
+                text: "Minimum";
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def labelStep = Label {
+                translateX: posLabelsX
+                translateY: posLabelsY + (2 * spacingLabels)
+                textFill: Color.AQUAMARINE
+                text: "Step";
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def max = TextBox {
+                translateX: posEditsx
+                translateY: posLabelsY
+                height: heigthEdits
+                width: widthEdits
+                text: bind maxString with inverse
+                columns: 10
+                selectOnFocus: true
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def min = TextBox {
+                translateX: posEditsx
+                translateY: posLabelsY + spacingLabels
+                height: heigthEdits
+                width: widthEdits
+                text: bind minString with inverse
+                columns: 10
+                selectOnFocus: true
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def delta = TextBox {
+                translateX: posEditsx
+                translateY: posLabelsY + (2 * spacingLabels)
+                height: heigthEdits
+                width: widthEdits
+                text: bind deltaString with inverse
+                columns: 5
+                selectOnFocus: true
+                font: Font {
+                    name: "Arial"
+                    size: 30
+                }
+            }
+    def levelBar = VerticalBar {
+                posx: posLeft
                 posy: 100
                 width: 70
                 screenHeight: 700
                 valmodel: bind temp.ivalue with inverse
             }
-    var button = Button {
-                translateY: 710
-                translateX: 50
-                width: 400
-                height: 50
+    def button = Button {
+                translateX: posLeft
+                translateY: 705
+                width: 480 - (2 * posLeft)
+                height: 80
                 text: "Back to overview"
                 font: Font {
-                    name: "Courier"
+                    name: "Arial"
                     size: 30
                 }
                 action: function () {
                     actionFunction();
                 };
             }
-    var max = TextBox {
-                translateX:200
-                translateY:100
-                height:50
-                width:50
-                text: bind maxString with inverse
-                columns: 10
-                selectOnFocus: true
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
 
-   var min = TextBox {
-                translateX:200
-                translateY:200
-                height:50
-                width:50
-                text: bind minString with inverse
-                columns: 10
-                selectOnFocus: true
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-   var delta = TextBox {
-                translateX:200
-                translateY:300
-                height:50
-                width:50
-                text: bind deltaString with inverse
-                columns: 5
-                selectOnFocus: true
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }            
     override protected function create(): Node {
         Group {
-            content: [levelBar, button,max,min,delta]
+            content: [label, labelMax, labelMin, labelStep, levelBar, button, max, min, delta]
         }
     }
 
