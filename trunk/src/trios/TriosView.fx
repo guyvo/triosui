@@ -42,8 +42,8 @@ var mainStage = Stage {
             title: "TriosView"
 
             scene: Scene {
-                stylesheets: bind stylesheets
-                //fill: Color.BLACK
+                
+                fill: Color.BLACK
                 width: SCREENWIDTH
                 height: SCREENHEIGTH
                 content: []
@@ -202,7 +202,7 @@ public class TileView extends CustomNode {
     def tile = TileNode {
                 cols: 2
                 rows: (sizeof cortexes) * (sizeof lights)
-                tileHeigth: 30
+                tileHeigth: 25
                 tileWidth: 240
                 nodes: setTileNodes()
             }

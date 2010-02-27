@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
+import com.sun.javafx.scene.control.caspian.ButtonSkin;
 
 
 /**
@@ -37,20 +38,29 @@ public class LabelButtonInHBox extends CustomNode{
     }
 
     def button = Button {
-                translateX:170
-                width: 40
+                translateX:150
+                width: 70
                 height: 20
                 text: "Detail"
                 font: Font {
                     name: "Arial"
-                    size: 9
+                    size: 10
                 }
+                focusTraversable:true
 
                 action :function(){
                         actionFunction();
-                        };
-                
+                };
+                skin : ButtonSkin{
+                    cornerRadius:20
+                    textFill:Color.CORAL
+                    fill:Color.LIGHTGREY
+                    
                 }
+
+                
+     }
+
 
     override protected function create(): Node {
         Group {
