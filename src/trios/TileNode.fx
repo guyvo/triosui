@@ -23,8 +23,8 @@ public class TileNode extends CustomNode {
     public-init var nodes: Node[];
     def tile = Tile {
                 translateX: 10
-                translateY: 10
-                hgap: 10
+                translateY: 40
+                hgap: 5
                 vgap: 1
                 columns: bind cols
                 rows: bind rows

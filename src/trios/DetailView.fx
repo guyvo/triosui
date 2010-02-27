@@ -15,11 +15,32 @@ import javafx.scene.Group;
 import javafx.scene.control.TextBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Skin;
+import com.sun.javafx.scene.control.caspian.TextBoxSkin;
+import com.sun.javafx.scene.control.caspian.ButtonSkin;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * @author guy
  */
 // place your code here
+
+/*
+var mePic = Image {
+    url: "{__DIR__}me.jpg"
+    width: 100
+    height: 150
+    preserveRatio: false
+}
+
+var cortexPic = Image {
+    url: "{__DIR__}cortex5.JPG"
+    width: 100
+    height: 150
+    preserveRatio: false
+}
+*/
 public class TriosDetailView extends CustomNode {
 
     def posLeft = 20;
@@ -29,6 +50,7 @@ public class TriosDetailView extends CustomNode {
     def posEditsx = posLabelsX + 150;
     def widthEdits = 150;
     def heigthEdits = 35;
+    def colorText = Color.CORAL;
     public-init var theCortex: CortexxEnum;
     public-init var theLight: Light;
     public-init var actionFunction: function(): Void;
@@ -54,7 +76,7 @@ public class TriosDetailView extends CustomNode {
     def label = Label {
                 translateX: posLeft
                 translateY: 5
-                textFill: Color.AQUAMARINE
+                textFill: colorText
                 text: bind temp.name;
                 font: Font {
                     name: "Arial"
@@ -64,7 +86,7 @@ public class TriosDetailView extends CustomNode {
     def labelMax = Label {
                 translateX: posLabelsX
                 translateY: posLabelsY
-                textFill: Color.AQUAMARINE
+                textFill: colorText
                 text: "Maximum";
                 font: Font {
                     name: "Arial"
@@ -74,7 +96,7 @@ public class TriosDetailView extends CustomNode {
     def labelMin = Label {
                 translateX: posLabelsX
                 translateY: posLabelsY + spacingLabels
-                textFill: Color.AQUAMARINE
+                textFill: colorText
                 text: "Minimum";
                 font: Font {
                     name: "Arial"
@@ -84,7 +106,7 @@ public class TriosDetailView extends CustomNode {
     def labelStep = Label {
                 translateX: posLabelsX
                 translateY: posLabelsY + (2 * spacingLabels)
-                textFill: Color.AQUAMARINE
+                textFill: colorText
                 text: "Step";
                 font: Font {
                     name: "Arial"
@@ -101,8 +123,14 @@ public class TriosDetailView extends CustomNode {
                 selectOnFocus: true
                 font: Font {
                     name: "Arial"
-                    size: 30
+                    size: 25
                 }
+               skin: TextBoxSkin{
+                    cornerRadius:10
+                    textFill:Color.CORAL
+                    backgroundFill:Color.GRAY
+                    selectedTextFill:Color.AQUA
+               }
             }
     def min = TextBox {
                 translateX: posEditsx
@@ -114,8 +142,14 @@ public class TriosDetailView extends CustomNode {
                 selectOnFocus: true
                 font: Font {
                     name: "Arial"
-                    size: 30
+                    size: 25
                 }
+                skin: TextBoxSkin{
+                    cornerRadius:10
+                    textFill:Color.CORAL
+                    backgroundFill:Color.GRAY
+                }
+
             }
     def delta = TextBox {
                 translateX: posEditsx
@@ -127,7 +161,12 @@ public class TriosDetailView extends CustomNode {
                 selectOnFocus: true
                 font: Font {
                     name: "Arial"
-                    size: 30
+                    size: 25
+                }
+                skin: TextBoxSkin{
+                    cornerRadius:10
+                    textFill:Color.CORAL
+                    backgroundFill:Color.GRAY
                 }
             }
     def levelBar = VerticalBar {
@@ -138,9 +177,9 @@ public class TriosDetailView extends CustomNode {
                 valmodel: bind temp.ivalue with inverse
             }
     def button = Button {
-                translateX: posLeft
-                translateY: 705
-                width: 480 - (2 * posLeft)
+                translateX: posLeft + 70
+                translateY: 620
+                width: 350
                 height: 80
                 text: "Back to overview"
                 font: Font {
@@ -150,8 +189,31 @@ public class TriosDetailView extends CustomNode {
                 action: function () {
                     actionFunction();
                 };
-            }
+                skin:ButtonSkin{
+                    textFill:Color.CORAL
+                    cornerRadius:30
 
+                }
+
+            }
+    /*
+    def image = ImageView{
+       x:400
+       y:5
+       fitHeight:50
+       fitWidth:50
+       image: mePic
+    }
+
+    def image2 = ImageView{
+       x:100
+       y:300
+       fitHeight:300
+       fitWidth:350
+       image: cortexPic
+       smooth:true
+    }
+*/
     override protected function create(): Node {
         Group {
             content: [label, labelMax, labelMin, labelStep, levelBar, button, max, min, delta]
