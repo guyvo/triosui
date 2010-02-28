@@ -30,7 +30,7 @@ import javafx.scene.Scene;
  */
 // the screen boundaries
 public def SCREENWIDTH = 480;
-public def SCREENHEIGTH = 800;
+public def SCREENHEIGTH = 700;
 
 var stylesheets : String = "{__DIR__}default.css";
 

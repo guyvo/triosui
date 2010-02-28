@@ -19,7 +19,7 @@ import javafx.io.http.HttpHeader;
 public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
-        location: "http://guyvo.no-ip.biz/";
+        location: "http://guyvo.no-ip.biz:60000/";
         //GVO TODO
         method: method
 
