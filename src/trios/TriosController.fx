@@ -16,6 +16,11 @@ import trios.TriosModel.*;
 import javafx.stage.Alert;
 import javafx.io.http.HttpHeader;
 
+public var toRead;
+public var bytesRead;
+public var toWrite;
+public var bytesWritten;
+
 public function doHttp(method : String) : Void{
 
     var getRequest: HttpRequest = HttpRequest {
@@ -32,6 +37,8 @@ public function doHttp(method : String) : Void{
             println("onStarted - started performing method: {getRequest.method} on location: {getRequest.location}");
         }
         onConnecting: function () {
+            bytesRead=0;
+            bytesWritten=0;
             println("onConnecting")
         }
         onDoneConnect: function () {
@@ -56,7 +63,7 @@ public function doHttp(method : String) : Void{
             println("onReading")
         }
         onToRead: function (bytes: Long) {
-
+            toRead = bytes;
             if (bytes < 0) {
                 println("onToRead - Content length not specified by server; bytes: {bytes}");
             } else {
@@ -74,6 +81,8 @@ public function doHttp(method : String) : Void{
             // The toread variable is non negative only if the server provides the content length
             def progress =
                     if (getRequest.toread > 0) "({(bytes * 100 / getRequest.toread)}%)" else "";
+            bytesRead = bytes;
+            println("{bytesRead}");
             println("onRead - bytes read: {bytes} {progress}");
         }
         // The content of a response can be accessed in the onInput callback function.
@@ -123,9 +132,11 @@ public function doHttp(method : String) : Void{
             }
         }
         onToWrite: function (bytes: Long) {
+            toWrite = bytes;
             println("onToWrite - entire content to be written: {bytes} bytes")
         }
         onWritten: function (bytes: Long) {
+            bytesWritten = bytes;
             println("onWritten - {bytes} bytes has now been written")
         }
         onDoneWrite: function () {
