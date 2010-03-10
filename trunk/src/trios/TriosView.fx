@@ -24,20 +24,22 @@ import trios.TimeLine.*;
 import trios.DetailView.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
+import java.lang.Runtime;
+
 
 /**
  * @author guy
  */
 // the screen boundaries
 public def SCREENWIDTH = 480;
-public def SCREENHEIGTH = 700;
-
-var stylesheets : String = "{__DIR__}default.css";
+public def SCREENHEIGTH = 800;
 
 var saver: ScreenBlockTimer;
 var refresh: RefreshTimer;
-var overview = TriosView.TileView { };
+var overview : TriosView.TileView;
 var detailViews: TriosDetailView[];
+
 var mainStage = Stage {
             title: "TriosView"
 
@@ -51,6 +53,7 @@ var mainStage = Stage {
         }
 
 public function setMainView(): Void {
+    doHttp("GET");
     mainStage.scene.content = [
         overview
     ]
@@ -58,6 +61,7 @@ public function setMainView(): Void {
 
 public function setStartView(): Void {
     doHttp("GET");
+    overview = TriosView.TileView{ };
     mainStage.scene.content = [
         overview
     ]
@@ -99,7 +103,7 @@ public function screenSaver(): Void {
                 fill: Color.YELLOW
                 visible: true
                 onMousePressed: function (me: MouseEvent): Void {
-                    setStartView();
+                    setMainView();
                     saver.timeline.play();
                     refresh.timeline.play();
                 }
@@ -196,7 +200,24 @@ public class TileView extends CustomNode {
     }
 
     public function Resfresh(): Void {
-        //doHttp("GET");
+    
+    }
+
+    def progressRead = ProgressIndicator {
+        translateX:20
+        translateY:SCREENHEIGTH - 110
+
+        scaleX:2
+        scaleY:2
+	progress: bind ProgressIndicator.computeProgress( toRead, bytesRead )
+    }
+
+    def progressWrite = ProgressIndicator {
+        translateX:150
+        translateY:SCREENHEIGTH - 110
+        scaleX:2
+        scaleY:2
+	progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
     }
 
     def tile = TileNode {
@@ -209,7 +230,7 @@ public class TileView extends CustomNode {
 
     override protected function create(): Node {
         Group {
-            content: [tile]
+            content: [tile,progressRead,progressWrite]
         }
     }
 
