@@ -25,7 +25,7 @@ import trios.DetailView.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
-import java.lang.Runtime;
+import com.sun.javafx.scene.control.caspian.ProgressIndicatorSkin;
 
 
 /**
@@ -206,18 +206,27 @@ public class TileView extends CustomNode {
     def progressRead = ProgressIndicator {
         translateX:20
         translateY:SCREENHEIGTH - 110
-
-        scaleX:2
-        scaleY:2
+        id:"GET"
 	progress: bind ProgressIndicator.computeProgress( toRead, bytesRead )
+
+        skin:ProgressIndicatorSkin{
+                accent:Color.GREEN
+                base:Color.RED
+                radius:30
+        }
     }
 
     def progressWrite = ProgressIndicator {
-        translateX:150
+        translateX:100
         translateY:SCREENHEIGTH - 110
-        scaleX:2
-        scaleY:2
-	progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
+        id:"POST"
+        progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
+
+        skin:ProgressIndicatorSkin{
+                accent:Color.GREEN
+                base:Color.RED
+                radius:30
+        }
     }
 
     def tile = TileNode {

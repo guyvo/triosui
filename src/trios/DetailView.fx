@@ -15,32 +15,15 @@ import javafx.scene.Group;
 import javafx.scene.control.TextBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.control.Skin;
 import com.sun.javafx.scene.control.caspian.TextBoxSkin;
 import com.sun.javafx.scene.control.caspian.ButtonSkin;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 
 /**
  * @author guy
  */
 // place your code here
 
-/*
-var mePic = Image {
-    url: "{__DIR__}me.jpg"
-    width: 100
-    height: 150
-    preserveRatio: false
-}
 
-var cortexPic = Image {
-    url: "{__DIR__}cortex5.JPG"
-    width: 100
-    height: 150
-    preserveRatio: false
-}
-*/
 public class TriosDetailView extends CustomNode {
 
     def posLeft = 20;
@@ -127,7 +110,7 @@ public class TriosDetailView extends CustomNode {
                 }
                skin: TextBoxSkin{
                     cornerRadius:10
-                    textFill:Color.CORAL
+                    textFill:Color.BLACK
                     backgroundFill:Color.GRAY
                     selectedTextFill:Color.AQUA
                }
@@ -146,7 +129,7 @@ public class TriosDetailView extends CustomNode {
                 }
                 skin: TextBoxSkin{
                     cornerRadius:10
-                    textFill:Color.CORAL
+                    textFill:Color.BLACK
                     backgroundFill:Color.GRAY
                 }
 
@@ -165,7 +148,7 @@ public class TriosDetailView extends CustomNode {
                 }
                 skin: TextBoxSkin{
                     cornerRadius:10
-                    textFill:Color.CORAL
+                    textFill:Color.BLACK
                     backgroundFill:Color.GRAY
                 }
             }
@@ -196,24 +179,7 @@ public class TriosDetailView extends CustomNode {
                 }
 
             }
-    /*
-    def image = ImageView{
-       x:400
-       y:5
-       fitHeight:50
-       fitWidth:50
-       image: mePic
-    }
 
-    def image2 = ImageView{
-       x:100
-       y:300
-       fitHeight:300
-       fitWidth:350
-       image: cortexPic
-       smooth:true
-    }
-*/
     override protected function create(): Node {
         Group {
             content: [label, labelMax, labelMin, labelStep, levelBar, button, max, min, delta]
