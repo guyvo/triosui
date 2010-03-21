@@ -46,12 +46,12 @@ def cortex3Map: Pair[] = {
         };
 def cortex4Map: Pair[] = {
             [
-                Pair { name: LightEnum.OUT1.toString() value: "vrij               " },
+                Pair { name: LightEnum.OUT1.toString() value: "badkamer beneden   " },
                 Pair { name: LightEnum.OUT2.toString() value: "zolder             " },
                 Pair { name: LightEnum.OUT3.toString() value: "badkamer boven     " },
                 Pair { name: LightEnum.OUT4.toString() value: "slaapkamer 2       " },
                 Pair { name: LightEnum.OUT5.toString() value: "slaapkamer 3       " },
-                Pair { name: LightEnum.OUT6.toString() value: "badkamer beneden   " },
+                Pair { name: LightEnum.OUT6.toString() value: "vrij               " },
             ]
         }
 
