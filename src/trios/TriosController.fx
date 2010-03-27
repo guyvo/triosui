@@ -157,16 +157,21 @@ public function doParse(in : InputStream): Void{
     var parse = PullParser {
 
         var cortexName;
-        var attr;
 
         documentType: PullParser.XML;
         input: in
         onEvent: function (event: Event) {
             if (event.type == PullParser.START_ELEMENT) {
                 if ((event.qname.name.startsWith("Cortex")) and event.level == 2) {
-                    attr = event.getAttributeValue("CORTEX");
-                    cortexName = attr;
-                }
+                    cortexName = event.getAttributeValue("CORTEX");
+                    for (cortex in c where cortex.name == cortexName ){
+                            cortex.general.sensor = event.getAttributeValue("SENSOR");
+                            cortex.general.watchdog = event.getAttributeValue("WATCHDOG");
+                            cortex.general.toggle = event.getAttributeValue("TOGGLE");
+                            cortex.general.dimmer = event.getAttributeValue("DIMMER");
+                            cortex.general.hours = event.getAttributeValue("HOURS");
+                            cortex.general.masks = event.getAttributeValue("MASKS");
+                    }                }
             }
             else if (event.type == PullParser.END_ELEMENT) {
                 if (event.qname.name == "Light" and event.level == 4) {
@@ -182,18 +187,7 @@ public function doParse(in : InputStream): Void{
 
                     }
                 }
-                else if (event.qname.name == "GEN1" and event.level == 4) {
-                }
-                else if (event.qname.name == "GEN2" and event.level == 4) {
-                }
-                else if (event.qname.name == "GEN3" and event.level == 4) {
-                }
-                else if (event.qname.name == "GEN4" and event.level == 4) {
-                }
-                else if (event.qname.name == "GEN5" and event.level == 4) {
-                }
-                else if (event.qname.name == "GEN6" and event.level == 4) {
-                }
+
             }
         }
     }
@@ -213,6 +207,12 @@ public function writeToXmlFile ( os: OutputStream){
 
     //file.resource.maxLength = 10 * 1024;
     //var file = file.resource.openOutputStream(true);
+
+
+    println ("{c[0].toXml()}");
+    println ("{c[1].toXml()}");
+    println ("{c[2].toXml()}");
+    println ("{c[3].toXml()}");
 
     try{
 

@@ -121,31 +121,30 @@ public class Light {
 public class General {
 
     // as string coming from XML
-    public-init var free1: String;
-    public-init var watchdog: String;
-    public-init var pvd: String;
-    public-init var free2: String;
-    public-init var free3: String;
-    public-init var flags: String;
+    public var sensor: String = "0";
+    public var watchdog: String = "0";
+    public var toggle: String = "0";
+    public var dimmer: String = "0";
+    public var hours: String = "0";
+    public var masks: String = "0";
 
     override function toString(): String {
-        return " {free1} {watchdog} {pvd} {free2} {free3} {flags } \n";
+        return " {sensor} {watchdog} {toggle} {dimmer} {hours} {masks } \n";
     }
 
     function toXml(): String {
-        return "<GEN1>{free1}</GEN1>"
-        "<GEN2>{watchdog}</GEN2>"
-        "<GEN3>{pvd}</GEN3>"
-        "<GEN4>{free2}</GEN4>"
-        "<GEN5>{free3}</GEN5>"
-        "<GEN6>{flags}</GEN6>"
-        "\n";
+        return " SENSOR=\"{sensor}\""
+        " WATCHDOG=\"{watchdog}\""
+        " TOGGLE=\"{toggle}\""
+        " DIMMER=\"{dimmer}\""
+        " HOURS=\"{hours}\""
+        " MASKS=\"{masks}\"";
     }
 }
 
 public class Cortex {
 
-    def general = General {};
+    public-init var general = General {};
 
     public-init var light : Light[];
     public-init var id: CortexxEnum;
@@ -162,7 +161,7 @@ public class Cortex {
 
     public function toXml(): String {
         return 
-        "<Cortex CORTEX=\"{name}\" >\n"
+        "<Cortex CORTEX=\"{name}\" {general.toXml()}>\n"
         "<Lights>\n"
         "{light[0].toXml()}"
         "{light[1].toXml()}"
@@ -172,9 +171,6 @@ public class Cortex {
         "{light[5].toXml()}"
         "</Lights>\n"
         "</Cortex>\n"
-        //"<GENERAL>\n"
-        //"{general.toXml()}"
-        //"</GENERAL>\n"
     }
 
     public function fromXml() {
