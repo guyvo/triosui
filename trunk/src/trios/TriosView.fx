@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import com.sun.javafx.scene.control.caspian.ProgressIndicatorSkin;
+import javafx.scene.control.Button;
 
 
 /**
@@ -33,14 +34,15 @@ import com.sun.javafx.scene.control.caspian.ProgressIndicatorSkin;
  */
 // the screen boundaries
 public def SCREENWIDTH = 480;
-public def SCREENHEIGTH = 800;
+public def SCREENHEIGTH = 750;
 
 var saver: ScreenBlockTimer;
 var refresh: RefreshTimer;
-var overview : TriosView.TileView;
+public var overview : TriosView.TileView;
 var detailViews: TriosDetailView[];
+public var menuView : TriosMenuView;
 
-var mainStage = Stage {
+public var mainStage = Stage {
             title: "TriosView"
 
             scene: Scene {
@@ -57,14 +59,24 @@ public function setMainView(): Void {
     mainStage.scene.content = [
         overview
     ]
+
 }
 
 public function setStartView(): Void {
     doHttp("GET");
+    menuView = TriosMenuView{};
     overview = TriosView.TileView{ };
     mainStage.scene.content = [
-        overview
-    ]
+        menuView
+    ];
+    menuView.fadeTransition.play();
+}
+
+public function setMenuView() : Void {
+   mainStage.scene.content = [
+        menuView
+    ];
+    menuView.fadeTransition.play();
 }
 
 public function setDetailView(light: Light, cortex: CortexxEnum) {
@@ -205,7 +217,7 @@ public class TileView extends CustomNode {
 
     def progressRead = ProgressIndicator {
         translateX:20
-        translateY:SCREENHEIGTH - 110
+        translateY:SCREENHEIGTH - 80
         id:"GET"
 	progress: bind ProgressIndicator.computeProgress( toRead, bytesRead )
 
@@ -218,7 +230,7 @@ public class TileView extends CustomNode {
 
     def progressWrite = ProgressIndicator {
         translateX:100
-        translateY:SCREENHEIGTH - 110
+        translateY:SCREENHEIGTH - 80
         id:"POST"
         progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
 
@@ -227,6 +239,17 @@ public class TileView extends CustomNode {
                 base:Color.RED
                 radius:30
         }
+    }
+
+    var backButton =Button {
+        translateX: 240
+        translateY: SCREENHEIGTH - 80
+        width:200
+        height:50
+	text: "Main menu"
+	action: function() {
+            setMenuView();
+	}
     }
 
     def tile = TileNode {
@@ -239,7 +262,7 @@ public class TileView extends CustomNode {
 
     override protected function create(): Node {
         Group {
-            content: [tile,progressRead,progressWrite]
+            content: [tile,progressRead,progressWrite,backButton]
         }
     }
 
