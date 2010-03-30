@@ -55,7 +55,7 @@ public class HorizontalBar extends LevelBar {
 
     def scale = 2;
     def max = 200;
-    def sizeVal = 15;
+    def sizeVal = 13;
 
     public var valmodel: Integer on replace {
         value = (valmodel * scale);
