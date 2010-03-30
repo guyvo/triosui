@@ -10,7 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.Group;
 import trios.TriosView.*;
-import trios.TriosModel.c;
+import trios.TriosModel.*;
 import javafx.scene.text.Font;
 import javafx.animation.transition.FadeTransition;
 
@@ -31,7 +31,7 @@ public class TriosMenuView extends CustomNode {
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Overview"
-                 font: Font {
+                font: Font {
                     name: "Arial"
                     size: 30
                 }
@@ -62,20 +62,20 @@ public class TriosMenuView extends CustomNode {
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Cortex 1"
-                 font: Font {
+                font: Font {
                     name: "Arial"
                     size: 30
                 }
                 action: function () {
                     mainStage.scene.content = [
                         TriosCortexView {
-                            name: bind c[0].name.toString()
-                            sensor: bind c[0].general.sensor
-                            watchdog: bind c[0].general.watchdog
-                            toggle: bind c[0].general.toggle
-                            dimmer: bind c[0].general.dimmer
-                            hours: bind c[0].general.hours
-                            masks: bind c[0].general.masks
+                            name: c[0].name
+                            sensor: c[0].general.sensor
+                            watchdog: c[0].general.watchdog
+                            toggle: c[0].general.toggle
+                            dimmer: c[0].general.dimmer
+                            hours: c[0].general.hours
+                            masks: c[0].general.masks
                         }
                     ];
                 }
@@ -86,20 +86,20 @@ public class TriosMenuView extends CustomNode {
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Cortex 2"
-                 font: Font {
+                font: Font {
                     name: "Arial"
                     size: 30
                 }
                 action: function () {
                     mainStage.scene.content = [
                         TriosCortexView {
-                            name: bind c[1].name.toString()
-                            sensor: bind c[1].general.sensor
-                            watchdog: bind c[1].general.watchdog
-                            toggle: bind c[1].general.toggle
-                            dimmer: bind c[1].general.dimmer
-                            hours: bind c[1].general.hours
-                            masks: bind c[1].general.masks
+                            name: c[1].name
+                            sensor: c[1].general.sensor
+                            watchdog: c[1].general.watchdog
+                            toggle: c[1].general.toggle
+                            dimmer: c[1].general.dimmer
+                            hours: c[1].general.hours
+                            masks: c[1].general.masks
                         }
                     ];
                 }
@@ -110,21 +110,20 @@ public class TriosMenuView extends CustomNode {
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Cortex 3"
-                 font: Font {
+                font: Font {
                     name: "Arial"
                     size: 30
                 }
                 action: function () {
-
                     mainStage.scene.content = [
                         TriosCortexView {
-                            name: bind c[2].name.toString()
-                            sensor: bind c[2].general.sensor
-                            watchdog: bind c[2].general.watchdog
-                            toggle: bind c[2].general.toggle
-                            dimmer: bind c[2].general.dimmer
-                            hours: bind c[2].general.hours
-                            masks: bind c[2].general.masks
+                            name: c[2].name
+                            sensor: c[2].general.sensor
+                            watchdog: c[2].general.watchdog
+                            toggle: c[2].general.toggle
+                            dimmer: c[2].general.dimmer
+                            hours: c[2].general.hours
+                            masks: c[2].general.masks
                         }
                     ];
                 }
@@ -135,48 +134,46 @@ public class TriosMenuView extends CustomNode {
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Cortex 4"
-                 font: Font {
+                font: Font {
                     name: "Arial"
                     size: 30
                 }
                 action: function () {
-
                     mainStage.scene.content = [
                         TriosCortexView {
-                            name: bind c[3].name.toString()
-                            sensor: bind c[3].general.sensor
-                            watchdog: bind c[3].general.watchdog
-                            toggle: bind c[3].general.toggle
-                            dimmer: bind c[3].general.dimmer
-                            hours: bind c[3].general.hours
-                            masks: bind c[3].general.masks
+                            name: c[3].name
+                            sensor: c[3].general.sensor
+                            watchdog: c[3].general.watchdog
+                            toggle: c[3].general.toggle
+                            dimmer: c[3].general.dimmer
+                            hours: c[3].general.hours
+                            masks: c[3].general.masks
                         }
                     ];
                 }
             }
-
     def mainScreen = Group {
-         content: [
-                overviewButton,
-                setupButton,
-                cortex1Button,
-                cortex2Button,
-                cortex3Button,
-                cortex4Button
-            ]
-    }
-
+                content: [
+                    overviewButton,
+                    setupButton,
+                    cortex1Button,
+                    cortex2Button,
+                    cortex3Button,
+                    cortex4Button
+                ]
+            }
     public var fadeTransition = FadeTransition {
-        duration: 2s
-        node: mainScreen
-        fromValue: 0.1
-        toValue: 1
-        repeatCount:1
-        autoReverse: false
-    }
+                duration: 2s
+                node: mainScreen
+                fromValue: 0.1
+                toValue: 1
+                repeatCount: 2
+                autoReverse: false
+            }
 
     override protected function create(): Node {
-            mainScreen
+        mainScreen
     }
+
 }
 
