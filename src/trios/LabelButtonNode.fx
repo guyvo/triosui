@@ -27,7 +27,7 @@ public class LabelButtonInHBox extends CustomNode {
                 text: bind labelText
                 font: Font {
                     name: "Arial"
-                    size: 15
+                    size: 13
                 }
             }
     def button = Button {
@@ -38,6 +38,7 @@ public class LabelButtonInHBox extends CustomNode {
                 font: Font {
                     name: "Arial"
                     size: 10
+                    autoKern:true
                 }
                 focusTraversable: true
                 action: function () {
@@ -45,8 +46,8 @@ public class LabelButtonInHBox extends CustomNode {
                 };
                 skin: ButtonSkin {
                     cornerRadius: 20
-                    textFill: Color.BLACK
-                    fill: Color.LIGHTBLUE
+                    textFill: Color.CORAL
+                    fill: Color.LIGHTGRAY
                 }
             }
 

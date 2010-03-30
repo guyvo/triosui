@@ -27,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import com.sun.javafx.scene.control.caspian.ProgressIndicatorSkin;
 import javafx.scene.control.Button;
+import com.sun.javafx.scene.control.caspian.ButtonSkin;
 
 
 /**
@@ -46,7 +47,6 @@ public var mainStage = Stage {
             title: "TriosView"
 
             scene: Scene {
-                
                 fill: Color.BLACK
                 width: SCREENWIDTH
                 height: SCREENHEIGTH
@@ -69,6 +69,7 @@ public function setStartView(): Void {
     mainStage.scene.content = [
         menuView
     ];
+   
     menuView.fadeTransition.play();
 }
 
@@ -229,7 +230,7 @@ public class TileView extends CustomNode {
     }
 
     def progressWrite = ProgressIndicator {
-        translateX:100
+        translateX:140
         translateY:SCREENHEIGTH - 80
         id:"POST"
         progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
@@ -241,12 +242,21 @@ public class TileView extends CustomNode {
         }
     }
 
-    var backButton =Button {
-        translateX: 240
+    var backButton = Button {
+        translateX: 260
         translateY: SCREENHEIGTH - 80
-        width:200
+        width:210
         height:50
-	text: "Main menu"
+        text: "Main menu"
+        font: Font {
+            name: "Arial"
+            size: 10
+        }
+        skin: ButtonSkin {
+            cornerRadius: 20
+            textFill: Color.CORAL
+            fill: Color.LIGHTGRAY
+        }
 	action: function() {
             setMenuView();
 	}

@@ -12,9 +12,9 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Button;
-import trios.TriosView.mainStage;
-import trios.TriosView.menuView;
-import trios.TriosView.setMenuView;
+import trios.TriosView.*;
+import com.sun.javafx.scene.control.caspian.ButtonSkin;
+import javafx.scene.shape.Rectangle;
 
 /**
  * @author guy
@@ -94,17 +94,30 @@ public class TriosCortexView extends CustomNode {
             }
     var backButton = Button {
                 translateX: beginx
-                translateY: beginy + 6 * spacing
-                width: 375
-                height: 200
+                translateY: beginy + 8 * spacing
+                width: 400
+                height: 100
                 text: "Main menu"
                 font: Font {
                     name: "Arial"
                     size: 30
                 }
+                skin: ButtonSkin {
+                    cornerRadius: 20
+                    textFill: Color.CORAL
+                    fill: Color.LIGHTBLUE
+                }
                 action: function () {
                     setMenuView();
                 }
+            }
+    var backColor = Rectangle {
+                x: 0,
+                y: 0
+                width: 480,
+                height: 700
+                fill: Color.LIGHTBLUE
+                opacity:0.3
             }
     var nameLabel = Label {
                 translateX: beginx
@@ -113,13 +126,13 @@ public class TriosCortexView extends CustomNode {
                 textFill: Color.CORAL
                 font: Font {
                     name: "Courier"
-                    size: 30
+                    size: 10
                 }
             }
 
     override protected function create(): Node {
         Group {
-            content: [sensorLabel, watchdogLabel, toggleLabel, dimmerLabel, hoursLabel, masksLabel, backButton,nameLabel]
+            content: [backColor , sensorLabel, watchdogLabel, toggleLabel, dimmerLabel, hoursLabel, masksLabel, backButton, nameLabel]
         }
     }
 
