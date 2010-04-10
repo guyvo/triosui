@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import trios.TriosView.*;
 import com.sun.javafx.scene.control.caspian.ButtonSkin;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
 
 /**
  * @author guy
@@ -24,77 +25,23 @@ public class TriosCortexView extends CustomNode {
 
     def beginx = 20;
     def beginy = 20;
+    def offset = 200;
     def spacing = 50;
-    public var name;
-    public var sensor;
-    public var watchdog;
-    public var toggle;
-    public var dimmer;
-    public var hours;
-    public var masks;
-    var sensorLabel = Label {
-                translateX: beginx
-                translateY: beginy
-                text: "Temperature:        {sensor}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-    var watchdogLabel = Label {
-                translateX: beginx
-                translateY: beginy + spacing
-                text: "Watchdog count:     {watchdog}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-    var toggleLabel = Label {
-                translateX: beginx
-                translateY: beginy + 2 * spacing
-                text: "Toggle count:       {toggle}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-    var dimmerLabel = Label {
-                translateX: beginx
-                translateY: beginy + 3 * spacing
-                text: "Dimmer count:       {dimmer}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-    var hoursLabel = Label {
-                translateX: beginx
-                translateY: beginy + 4 * spacing
-                text: "Hours up:           {hours}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
-    var masksLabel = Label {
-                translateX: beginx
-                translateY: beginy + 5 * spacing
-                text: "Masks:              {masks}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 30
-                }
-            }
+    public var name: String;
+    public var sensor: String;
+    public var watchdog: String;
+    public var toggle: String;
+    public var dimmer: String;
+    public var hours: String;
+    public var masks: String;
+    var sensorLabel = LabelValueNode { labelText: "Temperature:" valueText: bind sensor };
+    var watchdogLabel = LabelValueNode { labelText: "Watchdog:" valueText: bind watchdog };
+    var toggleLabel = LabelValueNode { labelText: "Toggles:" valueText: bind toggle };
+    var dimmerLabel = LabelValueNode { labelText: "Dimmers:" valueText: bind dimmer };
+    var hoursLabel = LabelValueNode { labelText: "Hours:" valueText: bind hours };
+    var masksLabel = LabelValueNode { labelText: "Masks:" valueText: bind masks };
+    var nameLabel = LabelValueNode { labelText: "Cortex:" valueText: bind name };
     var backButton = Button {
-                translateX: beginx
-                translateY: beginy + 8 * spacing
                 width: 400
                 height: 100
                 text: "Main menu"
@@ -111,28 +58,16 @@ public class TriosCortexView extends CustomNode {
                     setMenuView();
                 }
             }
-    var backColor = Rectangle {
-                x: 0,
-                y: 0
-                width: 480,
-                height: 700
-                fill: Color.LIGHTBLUE
-                opacity:0.3
-            }
-    var nameLabel = Label {
-                translateX: beginx
-                translateY: 700
-                text: "Counters for {name}"
-                textFill: Color.CORAL
-                font: Font {
-                    name: "Courier"
-                    size: 10
-                }
-            }
 
     override protected function create(): Node {
         Group {
-            content: [backColor , sensorLabel, watchdogLabel, toggleLabel, dimmerLabel, hoursLabel, masksLabel, backButton, nameLabel]
+            content: [
+                VBox {
+                    width:480
+                    spacing: 20
+                    content: [nameLabel, sensorLabel, watchdogLabel, toggleLabel, dimmerLabel, hoursLabel, masksLabel, backButton]
+                }
+            ]
         }
     }
 

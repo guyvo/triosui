@@ -207,13 +207,16 @@ public class TileView extends CustomNode {
             actionFunction: Resfresh
         }
 
-        saver.timeline.play();
+       
+
+        //saver.timeline.play();
         refresh.timeline.play();
 
     }
 
     public function Resfresh(): Void {
-    
+      doHttp("GET");
+      //doHttp("POST");
     }
 
     def progressRead = ProgressIndicator {

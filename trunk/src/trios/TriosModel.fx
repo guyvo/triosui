@@ -148,7 +148,7 @@ public class Cortex {
 
     public-init var light : Light[];
     public-init var id: CortexxEnum;
-    public-init var name;
+    public-init var name : String;
 
     var mapping: CortexLightMap;
 

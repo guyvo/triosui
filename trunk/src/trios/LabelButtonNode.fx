@@ -38,7 +38,7 @@ public class LabelButtonInHBox extends CustomNode {
                 font: Font {
                     name: "Arial"
                     size: 10
-                    autoKern:true
+                    
                 }
                 focusTraversable: true
                 action: function () {
