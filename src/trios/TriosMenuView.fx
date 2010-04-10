@@ -15,18 +15,51 @@ import javafx.scene.text.Font;
 import javafx.animation.transition.FadeTransition;
 import com.sun.javafx.scene.control.caspian.ButtonSkin;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
 /**
  * @author guy
  */
 // place your code here
 public class TriosMenuView extends CustomNode {
+    var view : TriosCortexView[];
+
+    init{
+        for ( cortex in c ){
+            insert
+               TriosCortexView {
+                    name: bind cortex.name
+                    sensor: bind cortex.general.sensor
+                    watchdog: bind cortex.general.watchdog
+                    toggle: bind cortex.general.toggle
+                    dimmer: bind cortex.general.dimmer
+                    hours: bind cortex.general.hours
+                    masks: bind cortex.general.masks
+                }
+             into view;
+        }
+    }
+
 
     def beginx = 20;
     def beginy = 20;
     def buttonHeigth = 100;
     def buttonWidth = 400;
     def spacing = 20;
+
+
+    def gradient = LinearGradient {
+            proportional: true
+            startX: 0
+            startY: 0
+            endX: 0
+            endY: 1.0
+            stops: [
+                Stop {offset: 0.6 color: Color.BLUE }
+                Stop {offset: 0.9 color: Color.BLACK }
+            ]
+        }
     def overviewButton = Button {
                 translateX: beginx
                 translateY: beginy
@@ -40,7 +73,8 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
+
                 }
                 action: function () {
                     mainStage.scene.content = [
@@ -58,7 +92,8 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
+                   
                 }
                 font: Font {
                     name: "Arial"
@@ -81,21 +116,12 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
                 }
                 action: function () {
                     mainStage.scene.content = [
-                        TriosCortexView {
-                            name: c[0].name
-                            sensor: c[0].general.sensor
-                            watchdog: c[0].general.watchdog
-                            toggle: c[0].general.toggle
-                            dimmer: c[0].general.dimmer
-                            hours: c[0].general.hours
-                            masks: c[0].general.masks
-                        }
+                        for ( cortex in view where cortex.name == "Cortex1") cortex
                     ];
-
                 }
             }
     def cortex2Button = Button {
@@ -111,19 +137,11 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
                 }
                 action: function () {
-                    mainStage.scene.content = [
-                        TriosCortexView {
-                            name: c[1].name
-                            sensor: c[1].general.sensor
-                            watchdog: c[1].general.watchdog
-                            toggle: c[1].general.toggle
-                            dimmer: c[1].general.dimmer
-                            hours: c[1].general.hours
-                            masks: c[1].general.masks
-                        }
+                   mainStage.scene.content = [
+                        for ( cortex in view where cortex.name == "Cortex2") cortex
                     ];
                 }
             }
@@ -140,19 +158,11 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
                 }
                 action: function () {
-                    mainStage.scene.content = [
-                        TriosCortexView {
-                            name: c[2].name
-                            sensor: c[2].general.sensor
-                            watchdog: c[2].general.watchdog
-                            toggle: c[2].general.toggle
-                            dimmer: c[2].general.dimmer
-                            hours: c[2].general.hours
-                            masks: c[2].general.masks
-                        }
+                   mainStage.scene.content = [
+                        for ( cortex in view where cortex.name == "Cortex3") cortex
                     ];
                 }
             }
@@ -169,19 +179,11 @@ public class TriosMenuView extends CustomNode {
                 skin: ButtonSkin {
                     cornerRadius: 20
                     textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
+                    fill: gradient
                 }
                 action: function () {
-                    mainStage.scene.content = [
-                        TriosCortexView {
-                            name: c[3].name
-                            sensor: c[3].general.sensor
-                            watchdog: c[3].general.watchdog
-                            toggle: c[3].general.toggle
-                            dimmer: c[3].general.dimmer
-                            hours: c[3].general.hours
-                            masks: c[3].general.masks
-                        }
+                   mainStage.scene.content = [
+                        for ( cortex in view where cortex.name == "Cortex4") cortex
                     ];
                 }
             }

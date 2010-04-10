@@ -17,9 +17,8 @@ import java.lang.Runtime;
 
 function run()  {
 
-        println("{Runtime.getRuntime().totalMemory()}");
-        println("{Runtime.getRuntime().freeMemory()}");
-
+   // println("{Runtime.getRuntime().totalMemory()}");
+   // println("{Runtime.getRuntime().freeMemory()}");
    // overview of lights as first view bind with scene
    setStartView();
    //FX.exit();
