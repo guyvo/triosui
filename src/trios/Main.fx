@@ -13,7 +13,6 @@
 package trios;
 
 import trios.TriosView.*;
-import java.lang.Runtime;
 
 function run()  {
 

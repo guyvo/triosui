@@ -7,14 +7,10 @@ package trios;
 
 import javafx.scene.CustomNode;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import trios.TriosView.*;
-import com.sun.javafx.scene.control.caspian.ButtonSkin;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.VBox;
 
 /**
@@ -49,11 +45,7 @@ public class TriosCortexView extends CustomNode {
                     name: "Arial"
                     size: 30
                 }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: Color.LIGHTBLUE
-                }
+
                 action: function () {
                     setMenuView();
                 }

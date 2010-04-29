@@ -25,10 +25,7 @@ import trios.DetailView.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
-import com.sun.javafx.scene.control.caspian.ProgressIndicatorSkin;
 import javafx.scene.control.Button;
-import com.sun.javafx.scene.control.caspian.ButtonSkin;
-
 
 /**
  * @author guy
@@ -36,16 +33,13 @@ import com.sun.javafx.scene.control.caspian.ButtonSkin;
 // the screen boundaries
 public def SCREENWIDTH = 480;
 public def SCREENHEIGTH = 750;
-
 var saver: ScreenBlockTimer;
 var refresh: RefreshTimer;
-public var overview : TriosView.TileView;
+public var overview: TriosView.TileView;
 var detailViews: TriosDetailView[];
-public var menuView : TriosMenuView;
-
+public var menuView: TriosMenuView;
 public var mainStage = Stage {
             title: "TriosView"
-
             scene: Scene {
                 fill: Color.BLACK
                 width: SCREENWIDTH
@@ -57,26 +51,24 @@ public var mainStage = Stage {
 public function setMainView(): Void {
     doHttp("GET");
     mainStage.scene.content = [
-        overview
-    ]
-
+                overview
+            ]
 }
 
 public function setStartView(): Void {
     doHttp("GET");
-    menuView = TriosMenuView{};
-    overview = TriosView.TileView{ };
+    menuView = TriosMenuView {};
+    overview = TriosView.TileView {};
     mainStage.scene.content = [
-        menuView
-    ];
-   
+                menuView
+            ];
     menuView.fadeTransition.play();
 }
 
-public function setMenuView() : Void {
-   mainStage.scene.content = [
-        menuView
-    ];
+public function setMenuView(): Void {
+    mainStage.scene.content = [
+                menuView
+            ];
     menuView.fadeTransition.play();
 }
 
@@ -95,8 +87,8 @@ public function getDetail(light: Light, cortex: CortexxEnum): Void {
             for (detail in detailViews where (detail.theCortex == cor.id)
                     and (detail.theLight == light)) {
                 mainStage.scene.content = [
-                    detail
-                ]
+                            detail
+                        ]
             }
         }
     }
@@ -155,11 +147,9 @@ public function screenSaver(): Void {
                 repeatCount: RotateTransition.INDEFINITE
                 autoReverse: false
             }
-
     mainStage.scene.content = [
-        cir, txt
-    ];
-
+                cir, txt
+            ];
     scaleTransition.play();
     fadeTransition.play();
     rotTransition.play();
@@ -184,7 +174,7 @@ public function setTileNodes(): Node[] {
             var l = LabelButtonInHBox {
                         actionFunction: getDetailView(light, cortex.id)
                         labelText: "{light.name}"
-                    }
+                         }
 
             insert l into nodes;
         }
@@ -197,17 +187,17 @@ public class TileView extends CustomNode {
     init {
 
         saver = ScreenBlockTimer {
-            waitTime: 1m
-            actionFunction: screenSaver
-        }
+                    waitTime: 1m
+                    actionFunction: screenSaver
+                }
 
 
         refresh = RefreshTimer {
-            waitTime: 5s;
-            actionFunction: Resfresh
-        }
+                    waitTime: 5s;
+                    actionFunction: Resfresh
+                }
 
-       
+
 
         //saver.timeline.play();
         refresh.timeline.play();
@@ -216,55 +206,35 @@ public class TileView extends CustomNode {
 
     public function Resfresh(): Void {
       doHttp("GET");
-      //doHttp("POST");
+    //doHttp("POST");
     }
 
     def progressRead = ProgressIndicator {
-        translateX:20
-        translateY:SCREENHEIGTH - 80
-        id:"GET"
-	progress: bind ProgressIndicator.computeProgress( toRead, bytesRead )
-
-        skin:ProgressIndicatorSkin{
-                accent:Color.GREEN
-                base:Color.RED
-                radius:30
-        }
-    }
-
+                translateX: 20
+                translateY: SCREENHEIGTH - 80
+                id: "GET"
+                progress: bind ProgressIndicator.computeProgress(toRead, bytesRead)
+            }
     def progressWrite = ProgressIndicator {
-        translateX:140
-        translateY:SCREENHEIGTH - 80
-        id:"POST"
-        progress: bind ProgressIndicator.computeProgress( toWrite, bytesWritten )
-
-        skin:ProgressIndicatorSkin{
-                accent:Color.GREEN
-                base:Color.RED
-                radius:30
-        }
-    }
-
+                translateX: 140
+                translateY: SCREENHEIGTH - 80
+                id: "POST"
+                progress: bind ProgressIndicator.computeProgress(toWrite, bytesWritten)
+            }
     var backButton = Button {
-        translateX: 260
-        translateY: SCREENHEIGTH - 80
-        width:210
-        height:50
-        text: "Main menu"
-        font: Font {
-            name: "Arial"
-            size: 10
-        }
-        skin: ButtonSkin {
-            cornerRadius: 20
-            textFill: Color.CORAL
-            fill: Color.LIGHTGRAY
-        }
-	action: function() {
-            setMenuView();
-	}
-    }
-
+                translateX: 260
+                translateY: SCREENHEIGTH - 80
+                width: 210
+                height: 50
+                text: "Main menu"
+                font: Font {
+                    name: "Arial"
+                    size: 10
+                }
+                action: function () {
+                    setMenuView();
+                }
+            }
     def tile = TileNode {
                 cols: 2
                 rows: (sizeof cortexes) * (sizeof lights)
@@ -275,7 +245,7 @@ public class TileView extends CustomNode {
 
     override protected function create(): Node {
         Group {
-            content: [tile,progressRead,progressWrite,backButton]
+            content: [tile, progressRead, progressWrite, backButton]
         }
     }
 
