@@ -13,10 +13,10 @@ import trios.TriosView.*;
 import trios.TriosModel.*;
 import javafx.scene.text.Font;
 import javafx.animation.transition.FadeTransition;
-import com.sun.javafx.scene.control.caspian.ButtonSkin;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.text.TextAlignment;
 
 /**
  * @author guy
@@ -70,12 +70,7 @@ public class TriosMenuView extends CustomNode {
                     name: "Arial"
                     size: 30
                 }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
 
-                }
                 action: function () {
                     mainStage.scene.content = [
                         overview
@@ -84,17 +79,13 @@ public class TriosMenuView extends CustomNode {
                 }
             }
     def setupButton = Button {
+                textAlignment:TextAlignment.CENTER;
                 translateX: beginx
                 translateY: beginy + buttonHeigth + spacing
                 width: buttonWidth
                 height: buttonHeigth;
                 text: "Setup"
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
-                   
-                }
+
                 font: Font {
                     name: "Arial"
                     size: 30
@@ -113,11 +104,7 @@ public class TriosMenuView extends CustomNode {
                     name: "Arial"
                     size: 30
                 }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
-                }
+
                 action: function () {
                     mainStage.scene.content = [
                         for ( cortex in view where cortex.name == "Cortex1") cortex
@@ -133,11 +120,6 @@ public class TriosMenuView extends CustomNode {
                 font: Font {
                     name: "Arial"
                     size: 30
-                }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
                 }
                 action: function () {
                    mainStage.scene.content = [
@@ -155,11 +137,7 @@ public class TriosMenuView extends CustomNode {
                     name: "Arial"
                     size: 30
                 }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
-                }
+
                 action: function () {
                    mainStage.scene.content = [
                         for ( cortex in view where cortex.name == "Cortex3") cortex
@@ -176,11 +154,7 @@ public class TriosMenuView extends CustomNode {
                     name: "Arial"
                     size: 30
                 }
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: gradient
-                }
+
                 action: function () {
                    mainStage.scene.content = [
                         for ( cortex in view where cortex.name == "Cortex4") cortex

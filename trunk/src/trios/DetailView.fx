@@ -15,8 +15,6 @@ import javafx.scene.Group;
 import javafx.scene.control.TextBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import com.sun.javafx.scene.control.caspian.TextBoxSkin;
-import com.sun.javafx.scene.control.caspian.ButtonSkin;
 
 /**
  * @author guy
@@ -97,6 +95,7 @@ public class TriosDetailView extends CustomNode {
                 }
             }
     def max = TextBox {
+
                 translateX: posEditsx
                 translateY: posLabelsY
                 height: heigthEdits
@@ -108,12 +107,6 @@ public class TriosDetailView extends CustomNode {
                     name: "Arial"
                     size: 25
                 }
-               skin: TextBoxSkin{
-                    cornerRadius:10
-                    textFill:Color.BLACK
-                    backgroundFill:Color.GRAY
-                    selectedTextFill:Color.AQUA
-               }
             }
     def min = TextBox {
                 translateX: posEditsx
@@ -127,12 +120,6 @@ public class TriosDetailView extends CustomNode {
                     name: "Arial"
                     size: 25
                 }
-                skin: TextBoxSkin{
-                    cornerRadius:10
-                    textFill:Color.BLACK
-                    backgroundFill:Color.GRAY
-                }
-
             }
     def delta = TextBox {
                 translateX: posEditsx
@@ -145,11 +132,6 @@ public class TriosDetailView extends CustomNode {
                 font: Font {
                     name: "Arial"
                     size: 25
-                }
-                skin: TextBoxSkin{
-                    cornerRadius:10
-                    textFill:Color.BLACK
-                    backgroundFill:Color.GRAY
                 }
             }
     def levelBar = VerticalBar {
@@ -172,12 +154,6 @@ public class TriosDetailView extends CustomNode {
                 action: function () {
                     actionFunction();
                 };
-                skin:ButtonSkin{
-                    textFill:Color.CORAL
-                    cornerRadius:30
-
-                }
-
             }
 
     override protected function create(): Node {

@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
-import com.sun.javafx.scene.control.caspian.ButtonSkin;
+
 
 /**
  * @author guy
@@ -44,11 +44,6 @@ public class LabelButtonInHBox extends CustomNode {
                 action: function () {
                     actionFunction();
                 };
-                skin: ButtonSkin {
-                    cornerRadius: 20
-                    textFill: Color.CORAL
-                    fill: Color.LIGHTGRAY
-                }
             }
 
     override protected function create(): Node {

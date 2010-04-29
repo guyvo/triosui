@@ -25,6 +25,7 @@ public class LabelValueNode extends CustomNode {
     public var valueText: String;
 
     def label = Label {
+
                 text: bind labelText
                 textFill: Color.CORAL
                 font: Font {
