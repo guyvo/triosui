@@ -1,0 +1,1 @@
+making a nice bidirectional view of lights states controlled by an embedded system when learning the javaFx language.
